@@ -21,14 +21,17 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="-3dp"
+            android:layout_marginTop="-27dp"
             android:orientation="vertical"
             android:weightSum="10.5">
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -55,15 +58,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
+
                     android:weightSum="2">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Location"
                         android:paddingEnd="10dp"
                         android:paddingRight="10dp"
+                        android:text="Location"
                         android:textColor="@color/black"
                         android:textSize="12dp"
                         android:textStyle="normal" />
@@ -88,21 +92,23 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="30dp"
                 android:layout_weight="0.5"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_weight="1.0"
+                    android:layout_marginTop="10dp"
                     android:weightSum="4">
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="20dp"
                         android:layout_weight="0.2"
                         android:text="SKU"
                         android:textColor="@color/black"
@@ -124,17 +130,21 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:layout_weight="1.5"
+                android:gravity="center"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
+<!--            <TODO... CHANGE THE VALIDATIONS></TODO...>-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:contentDescription="TODO"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.CardView
@@ -150,7 +160,7 @@
                         <ImageView
                             android:id="@+id/ivScanLocation"
                             android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/fullscreen_img" />
                     </android.support.v7.widget.CardView>
@@ -173,7 +183,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cvScanPallet"
@@ -199,8 +210,8 @@
                         android:id="@+id/tvScanPallet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/cvScanLocation"
+                        android:layout_alignParentStart="true"
                         android:text="@string/container"
                         android:textColor="@color/black"
                         android:textSize="12sp"
@@ -216,7 +227,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cvScanPalletTo"
@@ -240,8 +251,8 @@
                         android:id="@+id/tvScanNewRSN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/cvScanLocation"
+                        android:layout_alignParentStart="true"
                         android:text="@string/scanToContainer"
                         android:textColor="@color/black"
                         android:textSize="12sp"
@@ -249,11 +260,14 @@
 
                 </LinearLayout>
 
+                <!--            <TODO... CHANGE THE VALIDATIONS></TODO...>-->
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:contentDescription="TODO"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.CardView
@@ -269,7 +283,7 @@
                         <ImageView
                             android:id="@+id/ivScanRSN"
                             android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/fullscreen_img" />
                     </android.support.v7.widget.CardView>
@@ -278,12 +292,13 @@
                         android:id="@+id/tvScanRSN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/cvScanLocation"
+                        android:layout_alignParentStart="true"
                         android:text="@string/sku"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:layout_alignParentLeft="true" />
 
                 </LinearLayout>
 
@@ -296,6 +311,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -356,9 +372,10 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -404,7 +421,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:text="Qty."
                         android:textColor="@color/black"
                         android:textSize="12dp"
@@ -437,6 +454,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -508,6 +526,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -576,6 +595,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -645,6 +665,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -710,15 +731,15 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_weight="1.2"
-                android:layout_gravity="bottom|center"
                 android:orientation="vertical"
                 android:weightSum="2.0">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_weight="1.2"
                     android:gravity="center"
@@ -727,8 +748,8 @@
 
                     <Button
                         android:id="@+id/btn_Skip"
-                        android:layout_width="100dp"
-                        android:layout_height="35dp"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
                         android:layout_marginRight="15dp"
                         android:layout_weight="0.5"
                         android:background="@drawable/button_shape"
@@ -741,13 +762,14 @@
 
                     <Button
                         android:id="@+id/btnPick"
-                        android:layout_width="100dp"
-                        android:layout_height="35dp"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
                         android:layout_marginLeft="15dp"
                         android:layout_weight="0.5"
                         android:background="@drawable/button_shape"
                         android:enabled="true"
                         android:text="@string/pick"
+
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="12dp"
@@ -755,34 +777,27 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    android:gravity="center">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <!--<Button
-                            android:id="@+id/btnCloseTwo"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center"
-                            android:background="@drawable/button_close_shape"
-                            android:foreground="@drawable/button_cross_close"
-                            android:foregroundGravity="center"
-                            android:gravity="center" />-->
-
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
             </LinearLayout>
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_marginTop="30dp">-->
+
+<!--                    &lt;!&ndash;<Button-->
+<!--                            android:id="@+id/btnCloseTwo"-->
+<!--                            android:layout_width="35dp"-->
+<!--                            android:layout_height="35dp"-->
+<!--                            android:layout_alignParentTop="true"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@drawable/button_close_shape"-->
+<!--                            android:foreground="@drawable/button_cross_close"-->
+<!--                            android:foregroundGravity="center"-->
+<!--                            android:gravity="center" />&ndash;&gt;-->
+
+
+<!--                </RelativeLayout>-->
+
 
         </LinearLayout>
 
@@ -793,6 +808,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"

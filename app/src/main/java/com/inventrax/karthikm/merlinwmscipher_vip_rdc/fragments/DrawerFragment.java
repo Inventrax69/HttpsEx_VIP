@@ -107,10 +107,10 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         List<String> mainListOutbound  = new ArrayList<String>();
         mainListOutbound.add("OBD Picking");
         mainListOutbound.add("Packing");
-        mainListOutbound.add("Packing Info");
-        mainListOutbound.add("Load Generation");
-        mainListOutbound.add("Loading");
-        mainListOutbound.add("Outbound Revert");
+//        mainListOutbound.add("Packing Info");
+//        mainListOutbound.add("Load Generation");
+//        mainListOutbound.add("Loading");
+//        mainListOutbound.add("Outbound Revert");
 
         // Adding child data List three
         List<String> mainListHouseKeeping = new ArrayList<String>();

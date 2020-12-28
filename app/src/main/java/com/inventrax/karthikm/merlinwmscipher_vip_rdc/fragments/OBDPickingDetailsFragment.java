@@ -598,11 +598,15 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                             if (!isToPalletScanned) {
                                 ValidatePallet(scannedData);
                             } else {
+
+                                if (ScanValidator.isRSNScanned(scannedData)) {
+                                    scannedData = scannedData.split("[-]", 2)[0];
+                                }
                                 ValiDateMaterial(scannedData);
                             }
 
                         }
-                        //   ValidateLocation(scannedData);
+//                           ValidateLocation(scannedData);
                     }
                 } else {
                     common.showUserDefinedAlertType(errorMessages.EMC_0012, getActivity(), getContext(), "Error");

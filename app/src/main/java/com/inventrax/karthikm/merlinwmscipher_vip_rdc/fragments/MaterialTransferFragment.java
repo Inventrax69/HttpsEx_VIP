@@ -444,6 +444,10 @@ public class MaterialTransferFragment extends Fragment implements View.OnClickLi
                     if (!isPalletScaned) {
                         ValidatePallet(scannedData);
                     } else {
+
+                        if (ScanValidator.isRSNScanned(scannedData)) {
+                            scannedData = scannedData.split("[-]", 2)[0];
+                        }
                         ValiDateMaterial(scannedData);
                     }
                 }

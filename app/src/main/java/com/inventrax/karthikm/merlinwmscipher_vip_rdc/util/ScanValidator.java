@@ -6,7 +6,7 @@ package com.inventrax.karthikm.merlinwmscipher_vip_rdc.util;
 
 public class ScanValidator {
 
-    public static boolean IsItemScanned(String scannedData) {
+    public static boolean isRSNScanned(String scannedData) {
         if (scannedData.split("[-]").length == 2) {
             return true;
         } else {

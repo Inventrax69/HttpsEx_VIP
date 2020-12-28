@@ -466,6 +466,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
            case "Load Generation": {
                 fragment = new LoadGenerationFragment();
                 title = "Load Generation";
+
            }
            break;
 

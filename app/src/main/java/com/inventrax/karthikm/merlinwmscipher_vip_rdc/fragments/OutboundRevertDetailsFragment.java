@@ -446,6 +446,10 @@ public class OutboundRevertDetailsFragment extends Fragment implements View.OnCl
                     GetRevertCartonCheck(scannedData);
                 }else{
                     // Scan SKU
+
+                    if (ScanValidator.isRSNScanned(scannedData)) {
+                        scannedData = scannedData.split("[-]", 2)[0];
+                    }
                     ValiDateMaterial(scannedData);
                 }
             }

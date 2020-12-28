@@ -451,7 +451,11 @@ public class LiveStockFragment extends Fragment implements View.OnClickListener,
             if(radioSKU.isChecked()){
 
                 // Validate Material
-                //validateMaterial();
+
+                if (ScanValidator.isRSNScanned(scannedData)) {
+                    scannedData = scannedData.split("[-]", 2)[0];
+                }
+
                 ValiDateMaterial(scannedData);
             }
 

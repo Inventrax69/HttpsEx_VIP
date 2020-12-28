@@ -480,6 +480,14 @@ public class GoodsInFragment extends Fragment implements View.OnClickListener, B
                     if (!isContanierScanned) {
                         ValidatePallet(scannedData);
                     } else {
+
+                        if (ScanValidator.isRSNScanned(scannedData)) {
+                            scannedData = scannedData.split("[-]", 2)[0];
+                            lblScannedSku.setText(scannedData);
+                        }
+
+
+
                         ValiDateMaterial(scannedData);
                     }
                 }
@@ -698,7 +706,7 @@ public class GoodsInFragment extends Fragment implements View.OnClickListener, B
                                     huSize = scanDTO1.getHUSize();
                                     if (!huSize.equals("1")) {
                                         lblHu.setText("Hu: " + "" + huNo + "/" + huSize);
-                                    }else {
+                                    } else {
                                         lblHu.setText("");
                                     }
 

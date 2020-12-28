@@ -413,6 +413,9 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                         ValidatePallet(scannedData);
                     } else {
                         if (etSku.getText().toString().isEmpty()) {
+                            if (ScanValidator.isRSNScanned(scannedData)) {
+                                scannedData = scannedData.split("[-]", 2)[0];
+                            }
                             ValiDateMaterial(scannedData);
                         } else {
                             if (etLocationTo.getText().toString().isEmpty()) {
