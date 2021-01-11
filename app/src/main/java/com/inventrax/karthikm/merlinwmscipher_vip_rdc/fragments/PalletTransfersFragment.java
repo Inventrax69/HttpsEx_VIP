@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,7 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.pojos.WMSExceptionMessage;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.services.RetrofitBuilderHttpsEx;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.DialogUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ExceptionLoggerUtils;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.FragmentUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ProgressDialogUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ScanValidator;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.SoundUtils;
@@ -355,14 +357,10 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                         // etKidID.setText(scannedData.split("[|]")[3]);
                         // lineNo = scannedData.split("[|]")[4];
                     }
-
                     cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
                     ivScanSku.setImageResource(R.drawable.fullscreen_img);
-
-
                     // To get the qty of sku from the scanned location
                     GetAvailbleQtyList();
-
                     if (scanType.equalsIgnoreCase("Auto")) {
                         etQty.setEnabled(false);
                     } else {
@@ -376,36 +374,27 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                 // check for Pallet Scanned
             }
             else*/ /*if (ScanValidator.isContainerScanned(scannedData)) {
-
                 if (!(etLocationFrom.getText().toString().isEmpty())) {
                     //isPalletScaned is boolean key for check is to pallet scan  or  From Pallet Scan
                     if (!isPalletScaned) {
-
                         if (!isSKUScanned) {
-
                             etPalletFrom.setText(scannedData);
                             ValidatePalletCode(etPalletFrom.getText().toString(), "from");
                             return;
                         }
-
                     }
-
                     if (!etLocationTo.getText().toString().isEmpty()) {
-
                         if (!etPalletFrom.getText().toString().equalsIgnoreCase(scannedData)) {
                             etPalletTo.setText(scannedData);
                             ValidatePalletCode(etPalletTo.getText().toString(), "to");
                         } else {
-
                             etPalletTo.setText("");
                             common.showUserDefinedAlertType(errorMessages.EMC_0034, getActivity(), getContext(), "Warning");
                         }
-
                     } else {
                         common.setIsPopupActive(true);
                         common.showUserDefinedAlertType(errorMessages.EMC_0020, getActivity(), getContext(), "Warning");
                     }
-
                 } else {
                     common.setIsPopupActive(true);
                     common.showUserDefinedAlertType(errorMessages.EMC_0026, getActivity(), getContext(), "Warning");
@@ -417,11 +406,9 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                 if (!isLocationScaned) {
                     etLocationFrom.setText(scannedData);
                     validateLocationCode(etLocationFrom.getText().toString(), "from");
-
                 } else {
                     //To Location
                     if (!etLocationFrom.getText().toString().isEmpty()) {
-
                         if (!etPalletFrom.getText().toString().isEmpty() || !etSku.getText().toString().isEmpty()) {
                             if (!etLocationFrom.getText().toString().equalsIgnoreCase(scannedData)) {
                                 etLocationTo.setText(scannedData);
@@ -448,7 +435,6 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                 else{
                     // From Location
                     if (!isLocationScaned) {
-
                         if (!(etLocationFrom.getText().toString().isEmpty())) {
                             ValidateLocation(scannedData);
                         } else {
@@ -456,13 +442,11 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                             common.showUserDefinedAlertType(errorMessages.EMC_0026, getActivity(), getContext(), "Warning");
                             return;
                         }
-
                     }else if(!etPalletFrom.getText().toString().isEmpty() && etSku.getText().toString().isEmpty()){
                         ValiDateMaterial(scannedData);
                     } else {
                         //To Location
                         if (!etLocationFrom.getText().toString().isEmpty()) {
-
                             if (!etPalletFrom.getText().toString().isEmpty() || !etSku.getText().toString().isEmpty()) {
                                 if (!etLocationFrom.getText().toString().equalsIgnoreCase(scannedData)) {
                                     ValidateLocation(scannedData);
@@ -765,11 +749,11 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                 tenantId = oHouseKeeping.getTenantID();   // Te
 
                 // get warehouses of selected tenant
-              //  getWarehouse();
+                //  getWarehouse();
             }
         }
 
-        
+
     }
 
     public void getWarehouseId() {
@@ -1210,9 +1194,9 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
 
                             if (scanDTO1 != null) {
                                 if (scanDTO1.getScanResult()) {
-                                        txtLocation.setText(scannedData);
-                                        cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                        ivScanLocation.setImageResource(R.drawable.check);
+                                    txtLocation.setText(scannedData);
+                                    cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                    ivScanLocation.setImageResource(R.drawable.check);
 
                                 } else {
 
@@ -1374,10 +1358,10 @@ public class PalletTransfersFragment extends Fragment implements View.OnClickLis
                                 InventoryDTO lstInventory = new InventoryDTO();
 
                                 if(lstInventory!=null){
-                                    common.showUserDefinedAlertType("Successfully Transfered", getActivity(), getContext(), "Success");
+                                    common.showUserDefinedAlertType("Successfully Transferred", getActivity(), getContext(), "Success");
                                     Clearfields();
                                 }else{
-                                    common.showUserDefinedAlertType("Error While Tranfer", getActivity(), getContext(), "Error");
+                                    common.showUserDefinedAlertType("Error while Tranfer", getActivity(), getContext(), "Error");
                                 }
 
 

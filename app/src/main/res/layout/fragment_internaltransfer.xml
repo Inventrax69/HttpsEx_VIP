@@ -484,6 +484,7 @@
                 android:layout_weight="0.9"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -555,6 +556,7 @@
                 android:layout_weight="0.9"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout
@@ -623,6 +625,7 @@
                 android:layout_weight="0.9"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2.0">
 
                 <LinearLayout

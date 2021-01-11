@@ -25,6 +25,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     LinearLayout ll_linear1,ll_linear2;
     private String userId = null, scanType = null, accountId = null;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,10 +103,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, unloadingFragment);
                 break;
 
-            case R.id.ll_putaway:
-                PutawayFragment putAwayFragment = new PutawayFragment();
-                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, putAwayFragment);
-                break;
+//            case R.id.ll_putaway:
+//                PutawayFragment putAwayFragment = new PutawayFragment();
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, putAwayFragment);
+//                break;
 
             case R.id.ll_picking:
                 OBDPickingHeaderFragment obdPickingHeaderFragment = new OBDPickingHeaderFragment();
@@ -146,6 +147,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 NewLoadSheetFragment newLoadSheetFragment = new NewLoadSheetFragment();
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, newLoadSheetFragment);
                 break;
+
+            case R.id.ll_putaway:
+                PutawayHeaderFragment putawayHeaderFragment = new PutawayHeaderFragment();
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, putawayHeaderFragment);
+                break;
+
 
         }
 

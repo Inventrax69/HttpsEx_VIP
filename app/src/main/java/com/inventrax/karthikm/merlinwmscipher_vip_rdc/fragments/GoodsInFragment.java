@@ -323,21 +323,33 @@ public class GoodsInFragment extends Fragment implements View.OnClickListener, B
 
             case R.id.btnReceive:
 
-                if (!lblScannedSku.getText().toString().isEmpty() && !Materialcode.equals("")) {
+                if(isDockScanned) {
 
-                    if (Integer.parseInt(receivedQty.split("[.]")[0]) < Integer.parseInt(pendingQty.split("[.]")[0])) {
+                    if(isContanierScanned) {
 
-                        cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
-                        ivScanSku.setImageResource(R.drawable.fullscreen_img);
+                        if (!lblScannedSku.getText().toString().isEmpty() && !Materialcode.equals("")) {
 
-                        ValidateRSNAndReceive();
+                            if (Integer.parseInt(receivedQty.split("[.]")[0]) < Integer.parseInt(pendingQty.split("[.]")[0])) {
 
-                    } else {
-                        common.showUserDefinedAlertType(errorMessages.EMC_0075, getActivity(), getContext(), "Warning");
+                                cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
+                                ivScanSku.setImageResource(R.drawable.fullscreen_img);
+
+                                ValidateRSNAndReceive();
+
+                            } else {
+                                common.showUserDefinedAlertType(errorMessages.EMC_0075, getActivity(), getContext(), "Warning");
+                                return;
+                            }
+                        } else {
+                            common.showUserDefinedAlertType(errorMessages.EMC_0028, getActivity(), getContext(), "Warning");
+                            return;
+                        }
+                    }else {
+                        common.showUserDefinedAlertType(errorMessages.EMC_088, getActivity(), getContext(), "Warning");
                         return;
                     }
-                } else {
-                    common.showUserDefinedAlertType(errorMessages.EMC_0028, getActivity(), getContext(), "Warning");
+                }else {
+                    common.showUserDefinedAlertType(errorMessages.EMC_0018, getActivity(), getContext(), "Warning");
                     return;
                 }
 
@@ -480,7 +492,15 @@ public class GoodsInFragment extends Fragment implements View.OnClickListener, B
                     if (!isContanierScanned) {
                         ValidatePallet(scannedData);
                     } else {
-                        ValiDateMaterial(scannedData);
+
+                        if (ScanValidator.isRSNScanned(scannedData)) {
+                            scannedData = scannedData.split("[-]", 2)[0];
+                            lblScannedSku.setText(scannedData);
+                        }
+
+
+
+                             ValiDateMaterial(scannedData);
                     }
                 }
 
@@ -698,7 +718,7 @@ public class GoodsInFragment extends Fragment implements View.OnClickListener, B
                                     huSize = scanDTO1.getHUSize();
                                     if (!huSize.equals("1")) {
                                         lblHu.setText("Hu: " + "" + huNo + "/" + huSize);
-                                    }else {
+                                    } else {
                                         lblHu.setText("");
                                     }
 

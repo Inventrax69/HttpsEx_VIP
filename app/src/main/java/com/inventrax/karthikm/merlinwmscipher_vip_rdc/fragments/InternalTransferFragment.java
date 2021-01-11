@@ -102,6 +102,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
     private String selectedTenant = "", selectedWH = "", tenantId = "", whId = "";
     List<HouseKeepingDTO> lstTenants = null;
     List<HouseKeepingDTO> lstWarehouse = null;
+    List<InventoryDTO> _lstOutboundDTO;
 
 
     // Cipher Barcode Scanner
@@ -297,7 +298,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                     rlSelect.setVisibility(View.GONE);
                     rlInternalTransfer.setVisibility(View.VISIBLE);
                     // method to get the storage locations
-                    GetBinToBinStorageLocations();
+                    //GetBinToBinStorageLocations();
 
                 } else {
                     common.showUserDefinedAlertType(errorMessages.EMC_0011, getActivity(), getContext(), "Error");
@@ -318,6 +319,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
 
                                     if(!etPalletTo.getText().toString().equals("")){
                                         UpsertBinToBinTransfer();
+
                                     }else{
                                         common.showUserDefinedAlertType(errorMessages.EMC_087, getActivity(), getContext(), "Error");
                                     }
@@ -413,6 +415,9 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                         ValidatePallet(scannedData);
                     } else {
                         if (etSku.getText().toString().isEmpty()) {
+                            if (ScanValidator.isRSNScanned(scannedData)) {
+                                scannedData = scannedData.split("[-]", 2)[0];
+                            }
                             ValiDateMaterial(scannedData);
                         } else {
                             if (etLocationTo.getText().toString().isEmpty()) {
@@ -668,6 +673,8 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                             if (scanDTO1 != null) {
                                 if (scanDTO1.getScanResult()) {
 
+
+
                                 /* ----For RSN reference----
                                     0 Sku|1 BatchNo|2 SerialNO|3 MFGDate|4 EXpDate|5 ProjectRefNO|6 Kit Id|7 line No|8 MRP ---- For SKU with 9 MSP's
 
@@ -681,6 +688,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                     /*    if (scannedData.split("[|]").length != 5) {*/
 
                                     Materialcode = scanDTO1.getSkuCode();
+                                    GetActivestockStorageLocations();
                                     lblBatchNo.setText(scanDTO1.getBatch());
                                     lblserialNo.setText(scanDTO1.getSerialNumber());
                                     lblMfgDate.setText(scanDTO1.getMfgDate());
@@ -708,7 +716,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
 
 
                                     // To get the qty of sku from the scanned location
-                                    GetAvailbleQtyList();
+
 
                                     if (scanType.equalsIgnoreCase("Auto")) {
                                         etQty.setEnabled(false);
@@ -1166,6 +1174,134 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
         }
     }
 
+    public void GetActivestockStorageLocations() {
+        try {
+            WMSCoreMessage message = new WMSCoreMessage();
+            message = common.SetAuthentication(EndpointConstants.Inventory, getContext());
+            InventoryDTO inventoryDTO = new InventoryDTO();
+
+            inventoryDTO.setUserId(Userid);
+            inventoryDTO.setAccountId(accountId);
+            inventoryDTO.setMaterialCode(Materialcode);
+
+            message.setEntityObject(inventoryDTO);
+            Call<String> call = null;
+            ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
+            try {
+                //Checking for Internet Connectivity
+                // if (NetworkUtils.isInternetAvailable()) {
+                // Calling the Interface method
+                ProgressDialogUtils.showProgressDialog("Please Wait");
+                call = apiService.GetActivestockStorageLocations(message);
+//                GetAvailbleQtyList
+                // } else {
+                // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
+                // return;
+                // }
+            } catch (Exception ex) {
+                try {
+                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_01", getActivity());
+                    logException();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ProgressDialogUtils.closeProgressDialog();
+                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
+            }
+            try {
+                //Getting response from the method
+                call.enqueue(new Callback<String>() {
+
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        try {
+
+                            if (response.body() != null) {
+
+                                core = gson.fromJson(response.body().toString(), WMSCoreMessage.class);
+                                if ((core.getType().toString().equals("Exception"))) {
+                                    List<LinkedTreeMap<?, ?>> _lExceptions = new ArrayList<LinkedTreeMap<?, ?>>();
+                                    _lExceptions = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
+                                    WMSExceptionMessage owmsExceptionMessage = null;
+                                    for (int i = 0; i < _lExceptions.size(); i++) {
+                                        owmsExceptionMessage = new WMSExceptionMessage(_lExceptions.get(i).entrySet());
+                                        ProgressDialogUtils.closeProgressDialog();
+
+
+                                        common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
+                                        return;
+                                    }
+                                } else {
+                                    List<LinkedTreeMap<?, ?>> _lstPickitem = new ArrayList<LinkedTreeMap<?, ?>>();
+                                    _lstPickitem = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
+                                    _lstOutboundDTO = new ArrayList<InventoryDTO>();
+                                    List<String> _lstindound = new ArrayList<>();
+                                    InventoryDTO oOutboundDTO = null;
+                                    for (int i = 0; i < _lstPickitem.size(); i++) {
+                                        oOutboundDTO = new InventoryDTO(_lstPickitem.get(i).entrySet());
+                                        _lstOutboundDTO.add(oOutboundDTO);
+
+                                    }
+                                    for (int j = 0; j < _lstOutboundDTO.size(); j++) {
+
+                                        // List of store ref no.
+                                        _lstindound.add(_lstOutboundDTO.get(j).getStorageLocation());
+                                        //_lstindound.add(oOutboundDTO.getStorageLocation());
+                                    }
+                                    ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, _lstindound);
+                                    spinnerSelectSloc.setAdapter(arrayAdapter);
+
+
+
+                                    ProgressDialogUtils.closeProgressDialog();
+                                    return;
+
+                                }
+                            } else {
+                                ProgressDialogUtils.closeProgressDialog();
+
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_02", getActivity());
+                                logException();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            ProgressDialogUtils.closeProgressDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable throwable) {
+                        ProgressDialogUtils.closeProgressDialog();
+                        DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
+                    }
+                });
+            } catch (Exception ex) {
+                try {
+                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_03", getActivity());
+                    logException();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ProgressDialogUtils.closeProgressDialog();
+                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
+            }
+        } catch (Exception ex) {
+            try {
+                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_04", getActivity());
+                logException();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ProgressDialogUtils.closeProgressDialog();
+            DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0013);
+        }
+    }
+
+
+
   /*  public void validateLocationCode(String location, final String from) {
         try {
 
@@ -1387,7 +1523,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                         lblProjectRefNo.setText("");
                                         etSku.setText("");
 
-                                        GetBinToBinStorageLocations();
+                                        //GetBinToBinStorageLocations();
                                         common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
                                         return;
                                     }
@@ -1729,7 +1865,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                             isSKUScanned = false;
                                             isPalletScaned = false;
 
-                                            GetBinToBinStorageLocations();
+                                            //GetBinToBinStorageLocations();
 
                                             soundUtils.alertSuccess(getActivity(), getContext());
 

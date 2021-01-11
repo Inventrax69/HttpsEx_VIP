@@ -474,6 +474,10 @@ public class PackingFragment extends Fragment implements View.OnClickListener, B
                         ValiDateMaterial(scannedData);
                     }
                 } else {
+
+                    if (ScanValidator.isRSNScanned(scannedData)) {
+                        scannedData = scannedData.split("[-]", 2)[0];
+                    }
                     ValiDateMaterial(scannedData);
                 }
             }

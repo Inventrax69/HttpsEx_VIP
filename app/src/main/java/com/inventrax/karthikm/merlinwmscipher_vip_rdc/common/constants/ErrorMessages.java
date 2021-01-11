@@ -153,4 +153,6 @@ public class ErrorMessages {
 
     public String EMC_087 = "Please Scan To Container";
 
+    public String EMC_088 = "Please scan pallet.";
+
 }

@@ -57,6 +57,7 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.DialogUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ExceptionLoggerUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.FragmentUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ProgressDialogUtils;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ScanValidator;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.SoundUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner;
 
@@ -533,6 +534,10 @@ public class LoadSheetFragment extends Fragment implements View.OnClickListener,
         if (scannedData != null) {
             if (!ProgressDialogUtils.isProgressActive()) {
                 if (rlLoadListThree.getVisibility() == View.VISIBLE) {
+
+                    if (ScanValidator.isRSNScanned(scannedData)) {
+                        scannedData = scannedData.split("[-]", 2)[0];
+                    }
                     ValiDateMaterial(scannedData);
                 }
             }

@@ -76,9 +76,9 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
 
     private static final String classCode = "API_FRAG_OBD_PICKING";
     private View rootView;
-    ImageView ivScanLocation, ivScanPallet, ivScanPalletTo, tvScanRSN, ivScanRSN, ivScanRSNnew;
+    ImageView ivScanLocation, ivScanPallet, ivScanPalletTo, ivScanRSN, ivScanRSNnew;
     Button btnMaterialSkip, btnPick, btn_Skip, btnOk, btnCloseSkip, btnClosefinal;
-    TextView lblPickListNo, lblScannedSku, lblHu;
+    TextView lblPickListNo, lblScannedSku, lblHu,tvScanRSN;
     TextView lblSKuNo, lblLocationNo, lblMRP, lblrsnNoNew, lblMfgDate, lblExpDate, lblProjectRefNo, lblassignedQty, lblserialNo, lblBatchNo;
     CardView cvScanPallet, cvScanPalletTo, cvScanRSN, cvScanNewRSN, cvScanLocation;
     EditText lblReceivedQty;
@@ -103,7 +103,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
     boolean isToPalletScanned = false;
     boolean pickValidateComplete = false;
     boolean isRSNScanned = false;
-    String assignedId = "", KitId = "", soDetailsId = "", Lineno = "", POSOHeaderId = "", sLoc = "", accountId = "", huNo = "", huSize = "";
+    String assignedId = "", KitId = "", soDetailsId = "", Lineno = "", POSOHeaderId = "",isPSN ="", PSN  ="", sLoc = "", accountId = "", huNo = "", huSize = "";
     int recQty, totalQty;
     //For Honey well barcode
     private static BarcodeReader barcodeReader;
@@ -168,6 +168,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         lblLocationNo = (TextView) rootView.findViewById(R.id.lblLocationSuggested);
         lblMRP = (TextView) rootView.findViewById(R.id.lblMRP);
         lblHu = (TextView) rootView.findViewById(R.id.lblHu);
+        tvScanRSN = (TextView) rootView.findViewById(R.id.tvScanRSN);
 
         lblHu.setText("");
 
@@ -487,89 +488,6 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             if (!ProgressDialogUtils.isProgressActive()) {
                 if (!lblLocationNo.getText().toString().isEmpty()) {
 
-/*                if (scanValidator.isContainerScanned(scannedData)) {
-                    if (isValidLocation) {
-                        if (!etPallet.getText().toString().isEmpty()) {
-
-                            if (!isPalletScanned) {
-
-                                if (scannedData.equals(etPallet.getText().toString())) {
-                                    isPalletScanned = true;
-                                    //ValidatePalletCode(etPallet.getText().toString());
-                                    cvScanPallet.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                    ivScanPallet.setImageResource(R.drawable.check);
-                                } else {
-                                    common.showUserDefinedAlertType(errorMessages.EMC_0009, getActivity(), getContext(), "Error");
-                                    return;
-                                }
-
-                            } else {
-
-                                etPalletTo.setText(scannedData);
-                                ValidatePalletCode(etPalletTo.getText().toString());
-                            }
-                        }
-                        else {
-                            etPalletTo.setText(scannedData);
-                            ValidatePalletCode(etPalletTo.getText().toString());
-                        }
-                    } else {
-                        common.showUserDefinedAlertType(errorMessages.EMC_0007, getActivity(), getContext(), "Warning");
-
-                    }
-                }
-                else if (ScanValidator.isItemScanned(scannedData)) {
-                *//* ----For RSN reference----
-               0 Sku|1 Qty|2 husize|3 InBoundQty|4 BatchNo|5 RSN|6 MFGDate|7 EXpDate|8 ProjectRefNO|9 SerialNO|10 lneNi|11 Huno*//*
-                    //ToyCar||||||0|001
-                    if (isValidLocation) {
-                        //validate Picking rsn
-                        if (!lblSKuNo.getText().toString().isEmpty() &&
-                                lblSKuNo.getText().toString().equalsIgnoreCase(scannedData.split("[|]")[0])) {
-
-                            if(lblBatchNo.getText().toString().equalsIgnoreCase(scannedData.split("[|]")[1]) &&
-                                    lblserialNo.getText().toString().equalsIgnoreCase(scannedData.split("[|]")[2]) &&
-                                    lblMfgDate.getText().toString().equalsIgnoreCase(scannedData.split("[|]")[3]) &&
-                                    lblExpDate.getText().toString().equalsIgnoreCase(scannedData.split("[|]")[4]) &&
-                                    lblProjectRefNo.getText().toString().equalsIgnoreCase(scannedData.split("[|]")[5])) {
-
-                                cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
-                                ivScanRSN.setImageResource(R.drawable.fullscreen_img);
-
-                                if (scanType.equalsIgnoreCase("Auto")) {
-                                    lblReceivedQty.setText("1");
-                                    UpsertPickItem();
-
-                                } else {
-                                    lblReceivedQty.setEnabled(true);
-                                    btnPick.setEnabled(true);
-                                    soundUtils.alertWarning(getActivity(), getContext());
-                                    DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0073);
-                                }
-                            }else {
-                                common.showUserDefinedAlertType(errorMessages.EMC_0053,getActivity(),getContext(),"Error");
-                            }
-                        } else {
-                            cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.white));
-                            ivScanRSN.setImageResource(R.drawable.warning_img);
-                            common.showUserDefinedAlertType(errorMessages.EMC_0029, getActivity(), getContext(), "Error");
-                        }
-                    } else {
-                        common.showUserDefinedAlertType(errorMessages.EMC_0007, getActivity(), getContext(), "Warning");
-                    }
-                }
-                else if (ScanValidator.isLocationScanned(scannedData)) {
-                    if (!lblLocationNo.getText().toString().isEmpty() && lblLocationNo.getText().toString().equalsIgnoreCase(scannedData)) {
-                        cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
-                        ivScanLocation.setImageResource(R.drawable.check);
-                        location = scannedData;
-                        isValidLocation = true;
-                    } else {
-                        cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
-                        ivScanLocation.setImageResource(R.drawable.warning_img);
-                        common.showUserDefinedAlertType(errorMessages.EMC_0033, getActivity(), getContext(), "Warning");
-                    }
-                }else{*/
                     if (!isValidLocation) {
 
                         if (!lblLocationNo.getText().toString().isEmpty() && lblLocationNo.getText().toString().equalsIgnoreCase(scannedData)) {
@@ -584,25 +502,31 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                             // common.showUserDefinedAlertType(errorMessages.EMC_0033+" # "+scannedData+ " # "+lblLocationNo.getText().toString(), getActivity(), getContext(), "Warning");
                         }
                     } else {
-                        if (!isPalletScanned) {
-                            if (scannedData.equals(etPallet.getText().toString())) {
-                                isPalletScanned = true;
-                                //ValidatePalletCode(etPallet.getText().toString());
-                                cvScanPallet.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                ivScanPallet.setImageResource(R.drawable.check);
-                            } else {
-                                common.showUserDefinedAlertType(errorMessages.EMC_0009, getActivity(), getContext(), "Error");
-                            }
-                        } else {
 
-                            if (!isToPalletScanned) {
-                                ValidatePallet(scannedData);
-                            } else {
-                                ValiDateMaterial(scannedData);
-                            }
+                        if(isPSN.equalsIgnoreCase("1")) {
+                            if (ScanValidator.isRSNScanned(scannedData)) {
+                                String isCSNAtCharSeven = String.valueOf(scannedData.split("[-]", 2)[1].charAt(7));
+                                if(isCSNAtCharSeven.equalsIgnoreCase("C")){
+                                    common.showUserDefinedAlertType("CSN scan is not allowed", getActivity(), getContext(), "Warning");
+                                return;
+                                }
+                                String isCSNAtCharSix = String.valueOf(scannedData.split("[-]", 2)[1].charAt(6));
+                                if(isCSNAtCharSix.equalsIgnoreCase("C")){
+                                    common.showUserDefinedAlertType("CSN scan is not allowed", getActivity(), getContext(), "Warning");
+                                return;
+                                }
+                                PSN  = scannedData;
+                                scannedData = scannedData.split("[-]", 2)[0];
 
+                            }
                         }
-                        //   ValidateLocation(scannedData);
+                        if(scannedData.split("[-]").length == 2){
+                            common.showUserDefinedAlertType("Please scan SKU only", getActivity(), getContext(), "Warning");
+                        }else {
+                            ValiDateMaterial(scannedData);
+                        }
+
+
                     }
                 } else {
                     common.showUserDefinedAlertType(errorMessages.EMC_0012, getActivity(), getContext(), "Error");
@@ -635,8 +559,6 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             scanDTO.setObdNumber(lblPickListNo.getText().toString());
             //inboundDTO.setIsOutbound("0");
             message.setEntityObject(scanDTO);
-
-            Log.v("ABCDE", new Gson().toJson(message));
 
             Call<String> call = null;
             ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
@@ -680,6 +602,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                 owmsExceptionMessage = new WMSExceptionMessage(_lExceptions.get(i).entrySet());
                             }
                             isRSNScanned = false;
+                            PSN= "";
                             cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
                             ivScanRSN.setImageResource(R.drawable.fullscreen_img);
                             ProgressDialogUtils.closeProgressDialog();
@@ -725,10 +648,15 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                                 lblReceivedQty.setText("1");
                                                 UpsertPickItem();
                                             } else {
-                                                lblReceivedQty.setEnabled(true);
-                                                btnPick.setEnabled(true);
-                                                soundUtils.alertWarning(getActivity(), getContext());
-                                                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0073);
+                                                if(isPSN.equalsIgnoreCase("1")){
+                                                    UpsertPickItem();
+                                                }else {
+                                                    lblReceivedQty.setEnabled(true);
+                                                    btnPick.setEnabled(true);
+                                                    soundUtils.alertWarning(getActivity(), getContext());
+                                                    DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0073);
+                                                }
+
                                             }
                                         } else {
                                             common.showUserDefinedAlertType(errorMessages.EMC_0079, getActivity(), getContext(), "Error");
@@ -1111,6 +1039,22 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                         lblHu.setText("Hu: " + "" + huNo + "/" + huSize);
                                     }else {
                                         lblHu.setText("");
+                                    }
+
+                                    if(oOutboundDTO.getIsPSN().equalsIgnoreCase("1")){
+                                        isPSN=oOutboundDTO.getIsPSN();
+                                        tvScanRSN.setText("Scan PSN");
+                                        lblReceivedQty.setEnabled(false);
+                                        lblReceivedQty.setText("1");
+
+                                    }else {
+                                        isPSN="";
+                                        tvScanRSN.setText(getString(R.string.sku));
+                                        lblReceivedQty.setEnabled(false);
+                                        lblReceivedQty.setText("");
+                                        lblReceivedQty.setEnabled(false);
+                                        lblReceivedQty.clearFocus();
+
                                     }
 
                                     if (lblLocationNo.getText().toString().equals("")) {
@@ -1500,9 +1444,11 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             oOutboundDTO.setMRP(lblMRP.getText().toString());
             oOutboundDTO.setpOSOHeaderId(POSOHeaderId);
             oOutboundDTO.setHUNo(huNo);
+            oOutboundDTO.setPSN(PSN);
             oOutboundDTO.setHUSize(huSize);
             oOutboundDTO.setHasDis("0");
             oOutboundDTO.setIsDam("0");
+            oOutboundDTO.setIsPSN(isPSN);
             message.setEntityObject(oOutboundDTO);
             Call<String> call = null;
             ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);

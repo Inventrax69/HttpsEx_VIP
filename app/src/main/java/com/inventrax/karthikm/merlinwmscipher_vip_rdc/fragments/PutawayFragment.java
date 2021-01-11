@@ -579,10 +579,16 @@ public class PutawayFragment extends Fragment implements View.OnClickListener, B
                         if(!isLocationScanned)
                             ValidateLocation(scannedData);
                         else{
-                            if(!isContainerScanned)
+                            if(!isContainerScanned) {
                                 ValidatePallet(scannedData);
-                            else
+                            }
+                            else {
+
+                                if (ScanValidator.isRSNScanned(scannedData)) {
+                                    scannedData = scannedData.split("[-]", 2)[0];
+                                }
                                 ValiDateMaterial(scannedData);
+                            }
 
                         }
 

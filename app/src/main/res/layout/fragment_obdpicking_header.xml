@@ -23,7 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="15dp"
-            android:text="@string/selectPickList"
+            android:text="@string/OBDPicking"
             android:textStyle="normal" />
 
         <com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner

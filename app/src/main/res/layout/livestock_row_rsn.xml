@@ -110,6 +110,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="5dp"
+            android:visibility="gone"
             android:weightSum="2">
 
             <TextView
@@ -142,6 +143,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="5dp"
+            android:visibility="gone"
             android:weightSum="2">
 
             <TextView
@@ -174,6 +176,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="5dp"
+            android:visibility="gone"
             android:weightSum="2">
 
             <TextView

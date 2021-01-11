@@ -26,7 +26,7 @@
     <string name="scanPart">Scan Part#</string>
     <string name="pending">Pending</string>
     <string name="received">Received</string>
-    <string name="scanContainer">Scan Container</string>
+    <string name="scanContainer">Scan Pallet</string>
     <string name="back">Back</string>
 
     <string name="hintBatch">Batch#</string>
@@ -59,6 +59,8 @@
     <string name="inbRec">INB Rec. </string>
     <string name="btnSkip">Skip</string>
     <string name="transferComplete">Transfer Complete</string>
+<!--    <mhe></mhe>-->
+    <string name="btnNext">Next</string>
 
     <string name="menu_masterdata">Master Data</string>
     <string name="menu_orders">Orders</string>
@@ -80,13 +82,14 @@
     <string name="menu_internalTransfer">Internal Transfer</string>
     <string name="menu_cycleCount">Cycle Count</string>
     <string name="menu_binTransfer">Bin Transfer</string>
+    <string name="menu_receiving">Receiving</string>
 
     <string name="selectTenant">Select Tenant</string>
     <string name="search">Search</string>
 
     <string name="obdQty">OBD Qty.</string>
     <string name="pickedQty">Picked Qty.</string>
-    <string name="scanToContainer">To Container</string>
+    <string name="scanToContainer">To Pallet</string>
     <string name="scanFromContainer">Scan From Container</string>
     <string name="pick">Pick</string>
     <string name="selectOBD">select OBD #</string>
@@ -100,7 +103,7 @@
 
     <string name="confirm">Confirm</string>
 
-    <string name="availableQty">Available Qty.</string>
+    <string name="availableQty">Quantity</string>
     <string name="transfer">Transfer</string>
     <string name="scanFromLocation">From Location</string>
     <string name="selectPrinter">Select Printer</string>
@@ -123,6 +126,7 @@
     <string name="title_activity_vbpl_list">VLPD List</string>
     <string name="title_activity_vlpd_pick">VLPD Pick</string>
     <string name="title_activity_internal_transfer">Transfer</string>
+    <string name="title_palletization">Palletization</string>
     <string name="title_activity_pallet_transfer">Pallet Transfers</string>
     <string name="title_activity_cycle_count">Cycle Count</string>
     <string name="title_activity_bin_transfer">Bin Transfer</string>
@@ -145,6 +149,7 @@
     <string name="fragment_about_txt_inventrax_link">www.inventrax.com</string>
     <string name="nav_item_home">Home</string>
     <string name="title_about">About</string>
+    <string name="title_sorting">Sorting</string>
     <string name="fragment_about_txt_ReleaseDate">Release Date :</string>
 
     <!--Unloading -->
@@ -152,7 +157,7 @@
     <string name="storeRefNo">Store Ref.# </string>
     <string name="dockNo">Dock No. </string>
     <string name="palletNo">Pallet </string>
-    <string name="palletTo">Pallet To </string>
+    <string name="palletTo">To Pallet</string>
     <string name="scanDock">Scan Dock</string>
     <string name="scanPallet">Scan Pallet</string>
     <string name="scanMaterial">Scan Material</string>
@@ -173,6 +178,7 @@
     <string name="material">Material </string>
     <string name="scanToLocation">To Loc.</string>
 
+    <string name="OBDPicking">OBD Picking</string>
     <string name="selectPickList">Pick List</string>
     <string name="pickListNo">Pick List:</string>
     <string name="skuSuggestions">SKU Suggestions</string>
@@ -181,7 +187,7 @@
     <string name="itemNotFound">Item Not Found</string>
     <string name="materialDamaged">Material Damaged</string>
     <string name="materialSkipped">Skip</string>
-    <string name="sku">SKU</string>
+    <string name="sku"> Scan SKU</string>
 
     <string name="selectLoadSheet">Select Load List</string>
     <string name="loadSheetNo">Load Sheet No. </string>
@@ -205,7 +211,7 @@
     <string name="jobOrder">Job Order </string>
     <string name="fromLocation">From Loc.</string>
     <string name="delete">Delete</string>
-    <string name="container">Container</string>
+    <string name="container">From Pallet</string>
     <string name="skip">Skip</string>
     <string name="ok_">OK</string>
     <string name="hintContainer">Container</string>
@@ -214,6 +220,7 @@
     <string name="select_wh">Select WH</string>
     <string name="from_pallet">From Pallet</string>
     <string name="putaway">Putaway</string>
+    <string name="pallet_transfer">Pallet Transfers</string>
     <string name="cycle_count">Cycle count</string>
     <string name="internal_transfer">Internal transfer</string>
     <string name="live_stock">Live Stock</string>
@@ -228,4 +235,6 @@
     <string name="carton">Carton</string>
     <string name="so_number_list">SO Number list</string>
     <string name="hu">Hu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

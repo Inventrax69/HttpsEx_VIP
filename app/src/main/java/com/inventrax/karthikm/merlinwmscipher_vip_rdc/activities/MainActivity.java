@@ -44,7 +44,9 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.OutboundRevertHe
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PackingFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PackingInfoFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PalletTransfersFragment;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PalletizationFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayFragment;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayHeaderFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.SortingFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.StockTransferPutAway;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.UnloadingFragment;
@@ -232,6 +234,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
                 }
                 if (fragment != null && fragment.isVisible() && fragment instanceof MaterialTransferFragment) {
                     ((MaterialTransferFragment) fragment).myScannedData(MainActivity.this, ScannedData);
+                }
+                if (fragment != null && fragment.isVisible() && fragment instanceof PalletizationFragment) {
+                    ((PalletizationFragment) fragment).myScannedData(MainActivity.this, ScannedData);
+                }
+                if (fragment != null && fragment.isVisible() && fragment instanceof PutawayHeaderFragment) {
+                    ((PutawayHeaderFragment) fragment).myScannedData(MainActivity.this, ScannedData);
                 }
             }
         }
@@ -457,6 +465,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
             }
             break;
 
+            case "Sorting": {
+                fragment = new SortingFragment();
+                title = "Packing";
+            }
+            break;
+
             case "Loading": {
                 fragment = new NewLoadSheetFragment();
                 title = "Loading";
@@ -466,6 +480,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
            case "Load Generation": {
                 fragment = new LoadGenerationFragment();
                 title = "Load Generation";
+
            }
            break;
 

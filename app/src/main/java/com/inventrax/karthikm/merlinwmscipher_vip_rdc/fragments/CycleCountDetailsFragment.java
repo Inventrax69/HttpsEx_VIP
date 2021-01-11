@@ -50,6 +50,7 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.common.constants.EndpointC
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.common.constants.ErrorMessages;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.interfaces.ApiInterface;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.pojos.CycleCountDTO;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.pojos.InventoryDTO;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.pojos.ScanDTO;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.pojos.WMSCoreMessage;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.pojos.WMSExceptionMessage;
@@ -57,6 +58,7 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.services.RetrofitBuilderHt
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.DialogUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ExceptionLoggerUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ProgressDialogUtils;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.ScanValidator;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.SoundUtils;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner;
 
@@ -118,6 +120,8 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
     TextView tvRack, tvColumn, tvLevel;
     SearchableSpinner spinnerSelectSloc;
     String storageLoc;
+
+    List<InventoryDTO> _lstOutboundDTO;
 
     public void myScannedData(Context context, String barcode){
         try {
@@ -293,9 +297,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         });
 
 
-        // To get Storage Locations
-        getSLocs();
-
 
 
 
@@ -401,23 +402,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         }
     }
 
-    public void getSLocs() {
 
-
-        List<String> _lstSLocNames = new ArrayList<>();
-        _lstSLocNames.add("OK");
-        _lstSLocNames.add("Damage");
-
-        ArrayAdapter arrayAdapterSLoc = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, _lstSLocNames);
-        spinnerSelectSloc.setAdapter(arrayAdapterSLoc);
-        int getPostion = _lstSLocNames.indexOf("OK");
-        String compareValue = String.valueOf(_lstSLocNames.get(getPostion).toString());
-        if (compareValue != null) {
-            int spinnerPosition = arrayAdapterSLoc.getPosition(compareValue);
-            spinnerSelectSloc.setSelection(spinnerPosition);
-        }
-
-    }
 
     // honeywell
     @Override
@@ -508,6 +493,12 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                     if (!isPalletScanned) {
                         ValidatePallet(scannedData);
                     } else {
+
+                        if (ScanValidator.isRSNScanned(scannedData)) {
+                            scannedData = scannedData.split("[-]", 2)[0];
+                            lblScannedSku.setText(scannedData);
+                        }
+
                         ValiDateMaterial(scannedData);
                     }
                 }
@@ -1108,7 +1099,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                                         etCCQty.setEnabled(false);
                                         etCCQty.clearFocus();
 
-                                        getSLocs();
 
                                     } else {
                                         common.showUserDefinedAlertType(lstDto.get(i).getResult(), getActivity(), getContext(), "Error");
@@ -1438,7 +1428,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         etProjectRef.setText("");
         etCCQty.setText("");
         // To get Storage Locations
-        getSLocs();
+
 
         etCCQty.setEnabled(false);
         etCCQty.clearFocus();
@@ -1484,10 +1474,137 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         isValidLocation = false;
         isPalletScanned = false;
         isRSNScanned = false;
-        // To get Storage Locations
-        getSLocs();
+
 
     }
+
+    public void GetActivestockStorageLocations() {
+        try {
+            WMSCoreMessage message = new WMSCoreMessage();
+            message = common.SetAuthentication(EndpointConstants.Inventory, getContext());
+            InventoryDTO inventoryDTO = new InventoryDTO();
+
+            inventoryDTO.setUserId(userId);
+            inventoryDTO.setAccountId(accountId);
+            inventoryDTO.setMaterialCode(materialCode);
+
+            message.setEntityObject(inventoryDTO);
+            Call<String> call = null;
+            ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
+            try {
+                //Checking for Internet Connectivity
+                // if (NetworkUtils.isInternetAvailable()) {
+                // Calling the Interface method
+                ProgressDialogUtils.showProgressDialog("Please Wait");
+                call = apiService.GetActivestockStorageLocations(message);
+//                GetAvailbleQtyList
+                // } else {
+                // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
+                // return;
+                // }
+            } catch (Exception ex) {
+                try {
+                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_01", getActivity());
+                    logException();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ProgressDialogUtils.closeProgressDialog();
+                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
+            }
+            try {
+                //Getting response from the method
+                call.enqueue(new Callback<String>() {
+
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        try {
+
+                            if (response.body() != null) {
+
+                                core = gson.fromJson(response.body().toString(), WMSCoreMessage.class);
+                                if ((core.getType().toString().equals("Exception"))) {
+                                    List<LinkedTreeMap<?, ?>> _lExceptions = new ArrayList<LinkedTreeMap<?, ?>>();
+                                    _lExceptions = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
+                                    WMSExceptionMessage owmsExceptionMessage = null;
+                                    for (int i = 0; i < _lExceptions.size(); i++) {
+                                        owmsExceptionMessage = new WMSExceptionMessage(_lExceptions.get(i).entrySet());
+                                        ProgressDialogUtils.closeProgressDialog();
+
+
+                                        common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
+                                        return;
+                                    }
+                                } else {
+                                    List<LinkedTreeMap<?, ?>> _lstPickitem = new ArrayList<LinkedTreeMap<?, ?>>();
+                                    _lstPickitem = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
+                                    _lstOutboundDTO = new ArrayList<InventoryDTO>();
+                                    List<String> _lstindound = new ArrayList<>();
+                                    InventoryDTO oOutboundDTO = null;
+                                    for (int i = 0; i < _lstPickitem.size(); i++) {
+                                        oOutboundDTO = new InventoryDTO(_lstPickitem.get(i).entrySet());
+                                        _lstOutboundDTO.add(oOutboundDTO);
+
+                                    }
+                                    for (int j = 0; j < _lstOutboundDTO.size(); j++) {
+
+                                        // List of store ref no.
+                                        _lstindound.add(_lstOutboundDTO.get(j).getStorageLocation());
+                                        //_lstindound.add(oOutboundDTO.getStorageLocation());
+                                    }
+                                    ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, _lstindound);
+                                    spinnerSelectSloc.setAdapter(arrayAdapter);
+
+
+
+                                    ProgressDialogUtils.closeProgressDialog();
+                                    return;
+
+                                }
+                            } else {
+                                ProgressDialogUtils.closeProgressDialog();
+
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_02", getActivity());
+                                logException();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            ProgressDialogUtils.closeProgressDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable throwable) {
+                        ProgressDialogUtils.closeProgressDialog();
+                        DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
+                    }
+                });
+            } catch (Exception ex) {
+                try {
+                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_03", getActivity());
+                    logException();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ProgressDialogUtils.closeProgressDialog();
+                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
+            }
+        } catch (Exception ex) {
+            try {
+                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "001_04", getActivity());
+                logException();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ProgressDialogUtils.closeProgressDialog();
+            DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0013);
+        }
+    }
+
+
 
     public void blockLocationForCycleCount() {
         try {
@@ -1897,6 +2014,8 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                                     //supplierInvoiceDetailsId = scanDTO1.getSupplierInvoiceDetailsID();
 
                                     materialCode = scanDTO1.getSkuCode();
+
+                                    GetActivestockStorageLocations();
 
                                     lblScannedSku.setText(materialCode);
                                     etBatch.setText(scanDTO1.getBatch());

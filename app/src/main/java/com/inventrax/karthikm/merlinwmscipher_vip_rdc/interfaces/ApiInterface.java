@@ -167,6 +167,10 @@ public interface ApiInterface {
     @POST("Transfers/TransferPalletToLocation")
     Call<String> TransferPalletToLocation(@Body WMSCoreMessage oRequest);
 
+    @POST("Transfers/GetActivestockStorageLocations")
+    Call<String> GetActivestockStorageLocations(@Body WMSCoreMessage oRequest);
+
+
     @POST("Outbound/CheckStrickyCompliance")
     Call<String> CheckStrickyCompliance(@Body WMSCoreMessage oRequest);
 
@@ -220,6 +224,12 @@ public interface ApiInterface {
 
     @POST("Transfers/UpsertBinToBinTransferItem")
     Call<String> UpsertBinToBinTransferItem(@Body WMSCoreMessage oRequest);
+
+    @POST("Transfers/UpsertBinToBinTransfer")
+    Call<String> UpsertBinToBinTransfer(@Body WMSCoreMessage oRequest);
+
+    @POST("Transfers/UpsertPalletBuilding")
+    Call<String> UpsertPalletBuilding(@Body WMSCoreMessage oRequest);
 
     @POST("Transfers/ChekContainerLocation")
     Call<String> ChekContainerLocation(@Body WMSCoreMessage oRequest);

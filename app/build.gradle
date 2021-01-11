@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId "com.inventrax.karthikm.merlinwmscipher_vip_rdc"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
-        versionName "1"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -20,9 +20,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('merlin.jks')
+            storeFile file('vip_jks.jks')
             storePassword '123456'
-            keyAlias 'merlin'
+            keyAlias 'vip'
             keyPassword '123456'
         }
     }

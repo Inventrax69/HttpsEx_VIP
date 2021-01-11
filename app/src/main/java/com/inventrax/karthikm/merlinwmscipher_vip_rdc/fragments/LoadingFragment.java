@@ -310,7 +310,7 @@ public class LoadingFragment extends Fragment implements View.OnClickListener,Ba
         }
 
         if (scannedData != null) {
-            if (ScanValidator.IsItemScanned(scannedData)) {
+            if (ScanValidator.isRSNScanned(scannedData)) {
                 cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
                 ivScanSku.setImageResource(R.drawable.fullscreen_img);
                 lblScannedSku.setText(scannedData.split("[-]",2)[0]);

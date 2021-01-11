@@ -568,6 +568,10 @@ public class VLPDPickingDetailsFragment extends Fragment implements View.OnClick
                         if(!isToPalletScanned){
                             ValidatePallet(scannedData);
                         }else{
+
+                            if (ScanValidator.isRSNScanned(scannedData)) {
+                                scannedData = scannedData.split("[-]", 2)[0];
+                            }
                             ValiDateMaterial(scannedData);
                         }
                     }

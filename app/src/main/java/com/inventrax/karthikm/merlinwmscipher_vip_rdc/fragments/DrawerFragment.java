@@ -1,4 +1,4 @@
-package com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments;
+ package com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments;
 
 
 import android.content.BroadcastReceiver;
@@ -100,17 +100,20 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         // Adding child data List one
         List<String> mainListInbound = new ArrayList<String>();
         mainListInbound.add("Receiving");
-        mainListInbound.add("Putaway");
+        mainListInbound.add("Palletization");
+//        mainListInbound.add("Putaway");
         mainListInbound.add("Pallet Transfers");
+        mainListInbound.add("Putaway");
 
         // Adding child data List two
         List<String> mainListOutbound  = new ArrayList<String>();
         mainListOutbound.add("OBD Picking");
-        mainListOutbound.add("Packing");
-        mainListOutbound.add("Packing Info");
-        mainListOutbound.add("Load Generation");
-        mainListOutbound.add("Loading");
-        mainListOutbound.add("Outbound Revert");
+//        mainListOutbound.add("Packing");
+        mainListOutbound.add("Sorting");
+//        mainListOutbound.add("Packing Info");
+//        mainListOutbound.add("Load Generation");
+//        mainListOutbound.add("Loading");
+//        mainListOutbound.add("Outbound Revert");
 
         // Adding child data List three
         List<String> mainListHouseKeeping = new ArrayList<String>();
@@ -164,16 +167,19 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         // Adding child data List one
         List<String> mainListInbound = new ArrayList<String>();
         mainListInbound.add("Receiving");
-        mainListInbound.add("Putaway");
+        mainListInbound.add("Palletization");
+//        mainListInbound.add("Putaway");
         mainListInbound.add("Pallet Transfers");
+        mainListInbound.add("Putaway");
 
         // Adding child data List two
         List<String> mainListOutbound  = new ArrayList<String>();
        // mainListOutbound.add("OBD Picking");
-        mainListOutbound.add("Packing");
+//        mainListOutbound.add("Packing");
         mainListOutbound.add("Packing Info");
         mainListOutbound.add("Load Generation");
         mainListOutbound.add("Loading");
+        mainListOutbound.add("Sorting");
 
         // Adding child data List three
         List<String> mainListHouseKeeping = new ArrayList<String>();
@@ -408,10 +414,14 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new UnloadingFragment());
             }
             break;
-            case "Putaway": {
-                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayFragment());
+            case "Palletization": {
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationFragment());
             }
             break;
+//            case "Putaway": {
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayFragment());
+//            }
+//            break;
             case "Pallet Transfers": {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletTransfersFragment());
             }
@@ -420,8 +430,12 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new OBDPickingHeaderFragment());
             }
             break;
-            case "Packing": {
-                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PackingFragment());
+//            case "Packing": {
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PackingFragment());
+//            }
+//            break;
+            case "Sorting": {
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new SortingFragment());
             }
             break;
             case "Packing Info": {
@@ -456,6 +470,10 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new CycleCountHeaderFragment());
             }
             break;
+            case "Putaway": {
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayHeaderFragment());
+            }
+            break;
             default:
             break;
         }
@@ -471,13 +489,16 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 menuList.add(new NavDrawerItem("Home", R.drawable.go));
                 // Inbound
                 menuList.add(new NavDrawerItem("Receiving", R.drawable.go));
-                menuList.add(new NavDrawerItem("Putaway", R.drawable.go));
+                menuList.add(new NavDrawerItem("Palletization", R.drawable.go));
+//                menuList.add(new NavDrawerItem("Putaway", R.drawable.go));
                 menuList.add(new NavDrawerItem("Pallet Transfers", R.drawable.go));
+                menuList.add(new NavDrawerItem("Putaway", R.drawable.go));
                 // Outbound
                 menuList.add(new NavDrawerItem("OBD Picking", R.drawable.go));
-                menuList.add(new NavDrawerItem("Packing", R.drawable.go));
+//                menuList.add(new NavDrawerItem("Packing", R.drawable.go));
                 menuList.add(new NavDrawerItem("Load Generation", R.drawable.go));
                 menuList.add(new NavDrawerItem("Loading", R.drawable.go));
+                menuList.add(new NavDrawerItem("Sorting", R.drawable.go));
                 // HouseKeeping
                 menuList.add(new NavDrawerItem("Bin to Bin", R.drawable.go));
                 menuList.add(new NavDrawerItem("Cycle Count", R.drawable.go));
