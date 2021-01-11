@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/HttpsEx_VIP.iml" filepath="$PROJECT_DIR$/HttpsEx_VIP.iml" group="HttpsEx_VIP" />
+      <module fileurl="file://$PROJECT_DIR$/app/HttpsEx_VIP-app.iml" filepath="$PROJECT_DIR$/app/HttpsEx_VIP-app.iml" group="HttpsEx_VIP/app" />
       <module fileurl="file://$PROJECT_DIR$/HttpsEx_VIP-master.iml" filepath="$PROJECT_DIR$/HttpsEx_VIP-master.iml" group="HttpsEx_VIP-master" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="HttpsEx_VIP-master/app" />
     </modules>
