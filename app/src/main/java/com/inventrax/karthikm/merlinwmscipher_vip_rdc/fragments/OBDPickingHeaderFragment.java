@@ -501,8 +501,8 @@ public class OBDPickingHeaderFragment extends Fragment implements View.OnClickLi
                                     ProgressDialogUtils.closeProgressDialog();
                                     if(lstPickRefNo.size()==0){
                                         pickobdId="";pickRefNo="";
-                                        arrayAdapterPickList = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, lstPickRefNo);
-                                        spinnerSelectPickList.setAdapter(arrayAdapterPickList);
+                                        /*arrayAdapterPickList = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, lstPickRefNo);
+                                        spinnerSelectPickList.setAdapter(arrayAdapterPickList);*/
                                         common.showUserDefinedAlertType("There is no corresponding OBD to pick for this SO", getActivity(), getContext(), "Warning");
                                         return;
                                     }

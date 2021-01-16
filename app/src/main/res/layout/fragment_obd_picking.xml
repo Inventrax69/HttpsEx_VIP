@@ -35,67 +35,65 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:weightSum="1">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1.0"-->
+<!--                    android:weightSum="1">-->
 
-                    <TextView
-                        android:id="@+id/lblPickListNo"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:gravity="left"
-                        android:text=""
-                        android:textColor="@color/colorAccent"
-                        android:textSize="12dp"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblPickListNo"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1.0"-->
+<!--                        android:gravity="left"-->
+<!--                        android:text=""-->
+<!--                        android:textColor="@color/colorAccent"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold" />-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1.0"-->
 
-                    android:weightSum="2">
+<!--                    android:weightSum="2">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingEnd="10dp"
-                        android:paddingRight="10dp"
-                        android:text="Location"
-                        android:textColor="@color/black"
-                        android:textSize="12dp"
-                        android:textStyle="normal" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:paddingEnd="10dp"-->
+<!--                        android:paddingRight="10dp"-->
+<!--                        android:text="Location"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="normal" />-->
 
-                    <TextView
-                        android:id="@+id/lblLocationSuggested"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="left"
-                        android:text=""
-                        android:textColor="@color/colorAccent"
-                        android:textSize="12dp"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblLocationSuggested"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="left"-->
+<!--                        android:text=""-->
+<!--                        android:textColor="@color/colorAccent"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold" />-->
 
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
 
             </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -110,6 +108,168 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="0.2"
+                        android:text="OBD"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/lblPickListNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.7"
+                        android:gravity="left"
+                        android:text=""
+                        android:layout_marginLeft="60dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_weight="0.2"
+                        android:text="Customer"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/lblCustmerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.7"
+                        android:gravity="left"
+                        android:text=""
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_weight="0.2"
+                        android:text="Dock"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/lblDock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.7"
+                        android:gravity="left"
+                        android:text=""
+                        android:layout_marginLeft="70dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_weight="0.2"
+                        android:text="Suggested Loc"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/lblLocationSuggested"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.7"
+                        android:gravity="left"
+                        android:layout_marginLeft="20dp"
+                        android:text=""
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0.2"
                         android:text="SKU"
                         android:textColor="@color/black"
                         android:textSize="12dp"
@@ -122,6 +282,7 @@
                         android:layout_weight="3.7"
                         android:gravity="left"
                         android:text=""
+                        android:layout_marginLeft="70dp"
                         android:textColor="@color/colorAccent"
                         android:textSize="12dp"
                         android:textStyle="bold" />
@@ -129,9 +290,89 @@
 
             </LinearLayout>
 
+<!--            <LinearLayout-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginTop="0dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_weight="1.0"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:weightSum="4">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_weight="0.2"-->
+<!--                        android:text="MRP"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="normal" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblMRP"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="3.7"-->
+<!--                        android:gravity="left"-->
+<!--                        android:text=""-->
+<!--                        android:layout_marginLeft="70dp"-->
+<!--                        android:textColor="@color/colorAccent"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0.2"
+                        android:text="DESCRIPTION"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/lblMDESCRIPTION"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.7"
+                        android:gravity="left"
+                        android:text=""
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_weight="1.5"
                 android:gravity="center"
                 android:layout_marginTop="40dp"
@@ -391,6 +632,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
                         android:text="Pending Qty : "
                         android:textColor="@color/black"
                         android:textSize="12dp"
@@ -413,7 +655,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_weight="1.0"
                     android:weightSum="2">
 
@@ -626,35 +868,36 @@
                         android:textSize="12dp"
                         android:textStyle="bold" />
                 </LinearLayout>
+<!--        <mahe></mahe>-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1.0"-->
+<!--                    android:weightSum="2"-->
+<!--                    android:visibility="gone">-->
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:weightSum="2">
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="MRP"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="normal" />-->
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="MRP"
-                        android:textColor="@color/black"
-                        android:textSize="12dp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/lblMRP"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.0"
-                        android:gravity="left"
-                        android:text=""
-                        android:textColor="@color/colorAccent"
-                        android:textSize="12dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblMRP"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_weight="1.0"-->
+<!--                        android:gravity="left"-->
+<!--                        android:text=""-->
+<!--                        android:textColor="@color/colorAccent"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                </LinearLayout>-->
 
 
             </LinearLayout>
@@ -731,7 +974,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="10dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_weight="1.2"
                 android:orientation="vertical"

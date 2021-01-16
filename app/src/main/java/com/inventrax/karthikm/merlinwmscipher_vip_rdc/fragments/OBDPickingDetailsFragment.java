@@ -79,7 +79,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
     ImageView ivScanLocation, ivScanPallet, ivScanPalletTo, ivScanRSN, ivScanRSNnew;
     Button btnMaterialSkip, btnPick, btn_Skip, btnOk, btnCloseSkip, btnClosefinal;
     TextView lblPickListNo, lblScannedSku, lblHu,tvScanRSN;
-    TextView lblSKuNo, lblLocationNo, lblMRP, lblrsnNoNew, lblMfgDate, lblExpDate, lblProjectRefNo, lblassignedQty, lblserialNo, lblBatchNo;
+    TextView lblSKuNo, lblLocationNo, lblMRP, lblrsnNoNew, lblMfgDate, lblExpDate, lblProjectRefNo, lblassignedQty, lblserialNo, lblBatchNo,lblCustomerName,lblDockLoc,lblMaterialDescription;
     CardView cvScanPallet, cvScanPalletTo, cvScanRSN, cvScanNewRSN, cvScanLocation;
     EditText lblReceivedQty;
     boolean IsStrictlycomplaince = false;
@@ -167,8 +167,11 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         lblSKuNo = (TextView) rootView.findViewById(R.id.lblSKUSuggested);
         lblLocationNo = (TextView) rootView.findViewById(R.id.lblLocationSuggested);
         lblMRP = (TextView) rootView.findViewById(R.id.lblMRP);
+        lblMaterialDescription = (TextView) rootView.findViewById(R.id.lblMDESCRIPTION);
         lblHu = (TextView) rootView.findViewById(R.id.lblHu);
         tvScanRSN = (TextView) rootView.findViewById(R.id.tvScanRSN);
+        lblCustomerName = (TextView) rootView.findViewById(R.id.lblCustmerName);
+        lblDockLoc = (TextView) rootView.findViewById(R.id.lblDock);
 
         lblHu.setText("");
 
@@ -315,7 +318,6 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                 common.setIsPopupActive(false);
 
                                 if (!skipReason.equals("")) {
-
                                     // To skip the item and regenerating suggestions
                                     OBDSkipItem();
                                 } else {
@@ -417,6 +419,10 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         lblSKuNo.setText("");
         etPallet.setText("");
         etPalletTo.setText("");
+        lblCustomerName.setText("");
+        lblMaterialDescription.setText("");
+//        lblCustomer.setText("");
+//        lblDockLoc.setText("");
 
         lblassignedQty.setText("");
         lblBatchNo.setText("");
@@ -520,14 +526,17 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
 
                             }
                         }
-                        if(scannedData.split("[-]").length == 2){
-                            common.showUserDefinedAlertType("Please scan SKU only", getActivity(), getContext(), "Warning");
-                        }else {
-                            ValiDateMaterial(scannedData);
-                        }
+//                        if(scannedData.split("[-]").length == 2){
+//                            common.showUserDefinedAlertType("Please scan SKU only", getActivity(), getContext(), "Warning");
+//                        }else {
+                        scannedData = scannedData.split("[-]", 2)[0];
+                        ValiDateMaterial(scannedData);
 
+//                        }
 
                     }
+
+
                 } else {
                     common.showUserDefinedAlertType(errorMessages.EMC_0012, getActivity(), getContext(), "Error");
                 }
@@ -543,6 +552,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             common.showUserDefinedAlertType(errorMessages.EMC_0030, getActivity(), getContext(), "Error");
         }
     }
+
 
     public void ValiDateMaterial(final String scannedData) {
 
@@ -1017,6 +1027,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     OutbountDTO oOutboundDTO = null;
                                     for (int i = 0; i < _lstPickitem.size(); i++) {
                                         oOutboundDTO = new OutbountDTO(_lstPickitem.get(i).entrySet());
+
                                     }
 
                                     // Picking suggestions after successful picking
@@ -1024,6 +1035,8 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     sLoc = "" + oOutboundDTO.getsLoc();
                                     POSOHeaderId = "" + oOutboundDTO.getpOSOHeaderId();
                                     Lineno = "" + oOutboundDTO.getLineno();
+//                                     lblSKuNo.setText(oOutboundDTO.getSKU()) + "-" + lblMRP.setText(oOutboundDTO.getMRP());
+                                    //lblSKuNo.setText(oOutboundDTO.getSKU()+ " - " +oOutboundDTO.getMRP());
                                     lblSKuNo.setText(oOutboundDTO.getSKU());
                                     assignedId = "" + oOutboundDTO.getAssignedID();
                                     soDetailsId = "" + oOutboundDTO.getSODetailsID();
@@ -1032,6 +1045,10 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     lblLocationNo.setText(oOutboundDTO.getLocation());
                                     etPallet.setText(oOutboundDTO.getPalletNo());
                                     pickedQty = oOutboundDTO.getPickedQty();
+                                    lblCustomerName.setText(oOutboundDTO.getCustomerName());
+                                    lblMaterialDescription.setText(oOutboundDTO.getMaterialDescription());
+
+                                    lblDockLoc.setText(oOutboundDTO.getDockLocation());
 
                                     huNo = oOutboundDTO.getHUNo();
                                     huSize = oOutboundDTO.getHUSize();

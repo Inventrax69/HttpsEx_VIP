@@ -400,21 +400,22 @@
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:weightSum="1">
+                    android:layout_weight="1">
 
-                    <com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner
-                        android:id="@+id/spinnerSelectSloc"
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:layout_width="0dp"
+                    <EditText
+                        android:id="@+id/etSku"
+                        style="@style/editTextStyleSmall"
+                        android:layout_width="150dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        ></com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner>
+                        android:enabled="false"
+                        android:hint="@string/sku"
+                        android:inputType="text"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
 
-                </LinearLayout>
 
 
 
@@ -430,6 +431,22 @@
                 android:orientation="horizontal"
                 android:visibility="visible"
                 >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:weightSum="1">
+
+                    <com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner
+                        android:id="@+id/spinnerSelectSloc"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        ></com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner>
+
+                </LinearLayout>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -446,21 +463,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
 
-                    <EditText
-                        android:id="@+id/etSku"
-                        style="@style/editTextStyleSmall"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:enabled="false"
-                        android:hint="@string/sku"
-                        android:inputType="text"
-                        android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/txtInputLayoutToLoc"
                     android:layout_width="0dp"

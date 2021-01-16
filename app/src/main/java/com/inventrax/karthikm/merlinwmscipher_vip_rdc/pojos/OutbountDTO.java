@@ -275,6 +275,11 @@ public class OutbountDTO {
     @SerializedName("PSN")
     private String PSN;
 
+    @SerializedName("DockLocation")
+    private String DockLocation ;
+
+    @SerializedName("MaterialDescription")
+    private String MaterialDescription ;
 
     private boolean isChecked = false;
 
@@ -753,7 +758,16 @@ public class OutbountDTO {
                         this.setPSN(entry.getValue().toString());
                     }
                     break;
-
+                case "DockLocation":
+                    if (entry.getValue() != null) {
+                        this.setDockLocation(entry.getValue().toString());
+                    }
+                    break;
+                case "MaterialDescription":
+                    if (entry.getValue() != null) {
+                        this.setMaterialDescription(entry.getValue().toString());
+                    }
+                    break;
 
             }
         }
@@ -1471,5 +1485,21 @@ public class OutbountDTO {
 
     public void setHUNo(String HUNo) {
         this.HUNo = HUNo;
+    }
+
+    public String getDockLocation() {
+        return DockLocation;
+    }
+
+    public void setDockLocation(String DockLocation) {
+       this.DockLocation = DockLocation;
+    }
+
+    public String getMaterialDescription() {
+        return MaterialDescription;
+    }
+
+    public void setMaterialDescription(String materialDescription) {
+       this.MaterialDescription = materialDescription;
     }
 }
