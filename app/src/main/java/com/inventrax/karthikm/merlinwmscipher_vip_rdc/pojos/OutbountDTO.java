@@ -276,10 +276,17 @@ public class OutbountDTO {
     private String PSN;
 
     @SerializedName("DockLocation")
-    private String DockLocation ;
+    private String DockLocation;
 
     @SerializedName("MaterialDescription")
-    private String MaterialDescription ;
+    private String MaterialDescription;
+
+    @SerializedName("RID")
+    private int RID;
+
+    @SerializedName("FetchNextItem")
+    private int FetchNextItem;
+
 
     private boolean isChecked = false;
 
@@ -293,11 +300,25 @@ public class OutbountDTO {
 
             switch (entry.getKey().toString()) {
 
+                case "RID":
+                    if (entry.getValue() != null) {
+                        this. setRID((int) Double.parseDouble(entry.getValue().toString()));
+                    }
+                    break;
+                case "FetchNextItem":
+                    if (entry.getValue() != null) {
+                        this.setFetchNextItem ((int) Double.parseDouble(entry.getValue().toString()));
+                    }
+                    break;
+
+
                 case "OutboundID":
                     if (entry.getValue() != null) {
                         this.setOutboundID(entry.getValue().toString());
                     }
                     break;
+
+
                 case "PickRefNo":
                     if (entry.getValue() != null) {
                         this.setPickRefNo((List<String>) entry.getValue());
@@ -771,6 +792,22 @@ public class OutbountDTO {
 
             }
         }
+    }
+
+    public int getRID() {
+        return RID;
+    }
+
+    public void setRID(int RID) {
+        this.RID = RID;
+    }
+
+    public int getFetchNextItem() {
+        return FetchNextItem;
+    }
+
+    public void setFetchNextItem(int fetchNextItem) {
+        FetchNextItem = fetchNextItem;
     }
 
     public String getPSN() {
@@ -1492,7 +1529,7 @@ public class OutbountDTO {
     }
 
     public void setDockLocation(String DockLocation) {
-       this.DockLocation = DockLocation;
+        this.DockLocation = DockLocation;
     }
 
     public String getMaterialDescription() {
@@ -1500,6 +1537,6 @@ public class OutbountDTO {
     }
 
     public void setMaterialDescription(String materialDescription) {
-       this.MaterialDescription = materialDescription;
+        this.MaterialDescription = materialDescription;
     }
 }

@@ -12,6 +12,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -267,6 +269,27 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
             }
         });
 
+        etQty.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 1 && s.toString().startsWith("0")) {
+                    s.clear();
+                    etQty.setError("Zero not allowed");
+                }
+            }
+        });
+
 
         // To get tenants
         //getTenants();
@@ -285,7 +308,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                 Clearfields();                       // clear the scanned fields
                 break;
             case R.id.cvScanFromCont:
-                isPalletScaned = true;
+                //isPalletScaned = true;
                 cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.white));
                 ivScanFromCont.setImageResource(R.drawable.check);
                 break;
@@ -1136,6 +1159,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                 }
 
 
+                                spinnerSelectSloc.setEnabled(true);
                                 arrayAdapter1 = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, lstInboundNo);
                                 spinnerSelectSloc.setAdapter(arrayAdapter1);
                                 ProgressDialogUtils.closeProgressDialog();
@@ -1394,6 +1418,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                         _lstindound.add(_lstOutboundDTO.get(j).getStorageLocation());
                                         //_lstindound.add(oOutboundDTO.getStorageLocation());
                                     }
+                                    spinnerSelectSloc.setEnabled(true);
                                     ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, _lstindound);
                                     spinnerSelectSloc.setAdapter(arrayAdapter);
 
@@ -1520,14 +1545,6 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                         spinnerSelectSloc.setEnabled(true);
                                         cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.white));
                                         ivScanSku.setImageResource(R.drawable.invalid_cross);
-
-                                        lblMRP.setText("");
-                                        lblserialNo.setText("");
-                                        lblBatchNo.setText("");
-                                        lblMfgDate.setText("");
-                                        lblExpDate.setText("");
-                                        lblProjectRefNo.setText("");
-                                        etSku.setText("");
 
                                         //GetBinToBinStorageLocations();
                                         common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
@@ -1851,14 +1868,10 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                             cvScanToCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
                                             ivScanToCont.setImageResource(R.drawable.fullscreen_img);
 
-                                            cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
-                                            ivScanFromCont.setImageResource(R.drawable.fullscreen_img);
-
                                             cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
                                             ivScanToLoc.setImageResource(R.drawable.fullscreen_img);
 
                                             etLocationTo.setText("");
-                                            etPalletFrom.setText("");
                                             etPalletTo.setText("");
                                             etSku.setText("");
                                             etQty.setText("");
@@ -1872,7 +1885,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                             etQty.setText("");
 
                                             isSKUScanned = false;
-                                            isPalletScaned = false;
+                                            Materialcode = "";
 
                                             //GetBinToBinStorageLocations();
 

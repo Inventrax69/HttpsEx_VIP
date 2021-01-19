@@ -77,7 +77,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
     private static final String classCode = "API_FRAG_OBD_PICKING";
     private View rootView;
     ImageView ivScanLocation, ivScanPallet, ivScanPalletTo, ivScanRSN, ivScanRSNnew;
-    Button btnMaterialSkip, btnPick, btn_Skip, btnOk, btnCloseSkip, btnClosefinal;
+    Button btnMaterialSkip, btnPick, btn_Next, btnOk, btnCloseSkip, btnClosefinal;
     TextView lblPickListNo, lblScannedSku, lblHu,tvScanRSN;
     TextView lblSKuNo, lblLocationNo, lblMRP, lblrsnNoNew, lblMfgDate, lblExpDate, lblProjectRefNo, lblassignedQty, lblserialNo, lblBatchNo,lblCustomerName,lblDockLoc,lblMaterialDescription;
     CardView cvScanPallet, cvScanPalletTo, cvScanRSN, cvScanNewRSN, cvScanLocation;
@@ -103,8 +103,8 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
     boolean isToPalletScanned = false;
     boolean pickValidateComplete = false;
     boolean isRSNScanned = false;
-    String assignedId = "", KitId = "", soDetailsId = "", Lineno = "", POSOHeaderId = "",isPSN ="", PSN  ="", sLoc = "", accountId = "", huNo = "", huSize = "";
-    int recQty, totalQty;
+    String assignedId = "", KitId = "", soDetailsId = "", Lineno = "", POSOHeaderId = "", mrp = "", isPSN ="", PSN  ="", sLoc = "", accountId = "", huNo = "", huSize = "";
+    int recQty, totalQty, rid;
     //For Honey well barcode
     private static BarcodeReader barcodeReader;
     private AidcManager manager;
@@ -159,7 +159,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         ivScanPalletTo = (ImageView) rootView.findViewById(R.id.ivScanPalletTo);
 
         btnPick = (Button) rootView.findViewById(R.id.btnPick);
-        btn_Skip = (Button) rootView.findViewById(R.id.btn_Skip);
+        btn_Next = (Button) rootView.findViewById(R.id.btn_Next);
         btnOk = (Button) rootView.findViewById(R.id.btnOk);
         btnCloseSkip = (Button) rootView.findViewById(R.id.btnCloseSkip);
 
@@ -216,7 +216,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
 
         gson = new GsonBuilder().create();
         btnPick.setOnClickListener(this);
-        btn_Skip.setOnClickListener(this);
+        btn_Next.setOnClickListener(this);
         btnOk.setOnClickListener(this);
         btnCloseSkip.setOnClickListener(this);
         cvScanPallet.setOnClickListener(this);
@@ -259,7 +259,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         });
 
 
-        GetPickItem();
+        GetPickItem(0);
 
 
     }
@@ -297,13 +297,10 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                     return;
                 }
                 break;
-            case R.id.btn_Skip:
-                if (isValidLocation) {
-                    SkipItem();
-                } else {
-                    common.showUserDefinedAlertType(errorMessages.EMC_0007, getActivity(), getContext(), "Error");
-                    return;
-                }
+            case R.id.btn_Next:
+
+                    GetPickItem(1);
+
 
                 break;
             case R.id.btnOk:
@@ -319,7 +316,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
 
                                 if (!skipReason.equals("")) {
                                     // To skip the item and regenerating suggestions
-                                    OBDSkipItem();
+                                    //OBDSkipItem();
                                 } else {
                                     common.showUserDefinedAlertType(errorMessages.EMC_0056, getActivity(), getContext(), "Error");
                                     return;
@@ -432,9 +429,11 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         lblProjectRefNo.setText("");
         lblserialNo.setText("");
         lblMRP.setText("");
+        mrp = "";
         lblHu.setText("");
         huNo = "";
         huSize = "";
+        rid = 0;
 
         isPalletScanned = false;
         isValidLocation = false;
@@ -964,7 +963,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
     }
 
 
-    public void GetPickItem() {
+    public void GetPickItem(int fetchNextItem) {
         //To get Picked item Details
         try {
             WMSCoreMessage message = new WMSCoreMessage();
@@ -973,6 +972,8 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             outbountDTO.setUserId(userId);
             outbountDTO.setAccountID(accountId);
             outbountDTO.setOutboundID(pickobdId);
+            outbountDTO.setRID(rid);
+            outbountDTO.setFetchNextItem(fetchNextItem);
             message.setEntityObject(outbountDTO);
             Call<String> call = null;
             ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
@@ -1047,6 +1048,8 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     pickedQty = oOutboundDTO.getPickedQty();
                                     lblCustomerName.setText(oOutboundDTO.getCustomerName());
                                     lblMaterialDescription.setText(oOutboundDTO.getMaterialDescription());
+                                    rid = oOutboundDTO.getRID();
+                                    mrp = oOutboundDTO.getMRP();
 
                                     lblDockLoc.setText(oOutboundDTO.getDockLocation());
 
@@ -1088,7 +1091,8 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     lblExpDate.setText(oOutboundDTO.getExpDate());
                                     lblProjectRefNo.setText(oOutboundDTO.getProjectNo());
                                     lblserialNo.setText(oOutboundDTO.getSerialNo());
-                                    lblMRP.setText(oOutboundDTO.getMRP());
+                                   // lblMRP.setText(oOutboundDTO.getMRP());
+                                    mrp = oOutboundDTO.getMRP();
 
                                     cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
                                     ivScanRSN.setImageResource(R.drawable.fullscreen_img);
@@ -1302,7 +1306,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         }
     }
 
-    public void SkipItem() {
+    /*public void SkipItem() {
         try {
             WMSCoreMessage message = new WMSCoreMessage();
             message = common.SetAuthentication(EndpointConstants.Inbound, getContext());
@@ -1429,7 +1433,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             }
             common.showUserDefinedAlertType(errorMessages.EMC_0003, getActivity(), getContext(), "Error");
         }
-    }
+    }*/
 
     public void UpsertPickItem() {
 
@@ -1458,7 +1462,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             oOutboundDTO.setToCartonNo(etPalletTo.getText().toString());
             oOutboundDTO.setSODetailsID(soDetailsId);
             oOutboundDTO.setLineno(Lineno);
-            oOutboundDTO.setMRP(lblMRP.getText().toString());
+            oOutboundDTO.setMRP(mrp);
             oOutboundDTO.setpOSOHeaderId(POSOHeaderId);
             oOutboundDTO.setHUNo(huNo);
             oOutboundDTO.setPSN(PSN);
@@ -1572,7 +1576,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
 
                                     soundUtils.alertSuccess(getActivity(), getContext());
 
-                                    GetPickItem();
+                                    GetPickItem(0);
                                 }
 
 
@@ -1617,7 +1621,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
         }
     }
 
-    public void OBDSkipItem() {
+   /* public void OBDSkipItem() {
 
         try {
 
@@ -1818,7 +1822,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             ProgressDialogUtils.closeProgressDialog();
             common.showUserDefinedAlertType(errorMessages.EMC_0003, getActivity(), getContext(), "Error");
         }
-    }
+    }*/
 
     // sending exception to the database
     public void logException() {
