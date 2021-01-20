@@ -277,7 +277,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                         int reqQty = totalQty - recQty;
                         int qty = Integer.parseInt(lblReceivedQty.getText().toString().split("[.]")[0]);
                         if (reqQty < qty) {
-                            common.showUserDefinedAlertType(errorMessages.EMC_0068, getActivity(), getContext(), "Error");
+                            common.showUserDefinedAlertType("Qty. Should not be more than Pick qty.” ", getActivity(), getContext(), "Error");
 
                         } else {
 

@@ -309,8 +309,15 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.cvScanFromCont:
                 //isPalletScaned = true;
-                cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.white));
-                ivScanFromCont.setImageResource(R.drawable.check);
+                cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
+                ivScanFromCont.setImageResource(R.drawable.fullscreen_img);
+                cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
+                ivScanFromLoc.setImageResource(R.drawable.fullscreen_img);
+                etLocationFrom.setText("");
+                etPalletFrom.setText("");
+                isPalletScaned= false;
+                isLocationScaned = false;
+                Clearfields();
                 break;
 
             case R.id.btnGo:
