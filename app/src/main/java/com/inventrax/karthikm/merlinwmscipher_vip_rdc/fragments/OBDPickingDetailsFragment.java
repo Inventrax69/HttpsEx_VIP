@@ -520,18 +520,22 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     common.showUserDefinedAlertType("CSN scan is not allowed", getActivity(), getContext(), "Warning");
                                 return;
                                 }
-                                PSN  = scannedData;
-                                scannedData = scannedData.split("[-]", 2)[0];
+                                if(scannedData.split("[-]").length != 2){
+                                    common.showUserDefinedAlertType("Please scan USN only", getActivity(), getContext(), "Warning");
+                                }else {
+                                    PSN = scannedData;
+                                    scannedData = scannedData.split("[-]", 2)[0];
+                                }
 
                             }
                         }
-                       if(scannedData.split("[-]").length != 2){
+                       /*if(scannedData.split("[-]").length != 2){
                             common.showUserDefinedAlertType("Please scan USN only", getActivity(), getContext(), "Warning");
-                        }else {
+                        }else {*/
                         scannedData = scannedData.split("[-]", 2)[0];
                         ValiDateMaterial(scannedData);
 
-                        }
+                       /* }*/
 
                     }
 
