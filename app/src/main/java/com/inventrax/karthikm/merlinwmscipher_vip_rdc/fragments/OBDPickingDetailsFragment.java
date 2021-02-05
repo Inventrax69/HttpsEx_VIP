@@ -525,13 +525,13 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
 
                             }
                         }
-//                        if(scannedData.split("[-]").length == 2){
-//                            common.showUserDefinedAlertType("Please scan SKU only", getActivity(), getContext(), "Warning");
-//                        }else {
+                       if(scannedData.split("[-]").length != 2){
+                            common.showUserDefinedAlertType("Please scan USN only", getActivity(), getContext(), "Warning");
+                        }else {
                         scannedData = scannedData.split("[-]", 2)[0];
                         ValiDateMaterial(scannedData);
 
-//                        }
+                        }
 
                     }
 
@@ -1050,6 +1050,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                     lblMaterialDescription.setText(oOutboundDTO.getMaterialDescription());
                                     rid = oOutboundDTO.getRID();
                                     mrp = oOutboundDTO.getMRP();
+                                    lblMRP.setText(mrp +"/-");
 
                                     lblDockLoc.setText(oOutboundDTO.getDockLocation());
 
@@ -1462,7 +1463,7 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             oOutboundDTO.setToCartonNo(etPalletTo.getText().toString());
             oOutboundDTO.setSODetailsID(soDetailsId);
             oOutboundDTO.setLineno(Lineno);
-            oOutboundDTO.setMRP(mrp);
+            oOutboundDTO.setMRP("");
             oOutboundDTO.setpOSOHeaderId(POSOHeaderId);
             oOutboundDTO.setHUNo(huNo);
             oOutboundDTO.setPSN(PSN);

@@ -86,9 +86,9 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
     Common common;
     private WMSCoreMessage core;
     private RelativeLayout rlInternalTransfer, rlSelect;
-    private CardView cvScanFromLoc, cvScanFromCont, cvScanSku, cvScanToLoc, cvScanToCont;
-    private ImageView ivScanFromLoc, ivScanFromCont, ivScanSku, ivScanToLoc, ivScanToCont;
-    EditText etLocationFrom, etLocationTo, etPalletFrom, etPalletTo, etSku, etQty;
+    private CardView cvScanFromLoc, cvScanFromCont, cvScanSku, cvScanToLoc;
+    private ImageView ivScanFromLoc, ivScanFromCont, ivScanSku, ivScanToLoc;
+    EditText etLocationFrom, etLocationTo, etPalletFrom, etSku, etQty;
     private SearchableSpinner spinnerSelectSloc, spinnerSelectTenant, spinnerSelectWarehouse;
     private Button btnBinComplete, btn_clear, btnGo;
 
@@ -149,21 +149,21 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
         etLocationFrom = (EditText) rootView.findViewById(R.id.etLocationFrom);
         etLocationTo = (EditText) rootView.findViewById(R.id.etLocationTo);
         etPalletFrom = (EditText) rootView.findViewById(R.id.etPalletFrom);
-        etPalletTo = (EditText) rootView.findViewById(R.id.etPalletTo);
+
         etSku = (EditText) rootView.findViewById(R.id.etSku);
         etQty = (EditText) rootView.findViewById(R.id.etQty);
 
         cvScanFromLoc = (CardView) rootView.findViewById(R.id.cvScanFromLoc);
         cvScanFromCont = (CardView) rootView.findViewById(R.id.cvScanFromCont);
         cvScanSku = (CardView) rootView.findViewById(R.id.cvScanSku);
-        cvScanToCont = (CardView) rootView.findViewById(R.id.cvScanToCont);
+
         cvScanToLoc = (CardView) rootView.findViewById(R.id.cvScanToLoc);
 
         ivScanFromLoc = (ImageView) rootView.findViewById(R.id.ivScanFromLoc);
         ivScanFromCont = (ImageView) rootView.findViewById(R.id.ivScanFromCont);
         ivScanToLoc = (ImageView) rootView.findViewById(R.id.ivScanToLoc);
         ivScanSku = (ImageView) rootView.findViewById(R.id.ivScanSku);
-        ivScanToCont = (ImageView) rootView.findViewById(R.id.ivScanToCont);
+
 
 
         lblMfgDate = (TextView) rootView.findViewById(R.id.lblMfgDate);
@@ -317,12 +317,8 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
 
                                 if (!etQty.getText().toString().equals("0") || !etQty.getText().toString().equals("")) {
 
-                                    if(!etPalletTo.getText().toString().equals("")){
                                         UpsertBinToBinTransfer();
 
-                                    }else{
-                                        common.showUserDefinedAlertType(errorMessages.EMC_087, getActivity(), getContext(), "Error");
-                                    }
 
                                 } else {
                                     common.showUserDefinedAlertType(errorMessages.EMC_0068, getActivity(), getContext(), "Error");
@@ -354,8 +350,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
         cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
         ivScanFromCont.setImageResource(R.drawable.fullscreen_img);
 
-        cvScanToCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
-        ivScanToCont.setImageResource(R.drawable.fullscreen_img);
 
         cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
         ivScanFromLoc.setImageResource(R.drawable.fullscreen_img);
@@ -369,7 +363,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
         etLocationTo.setText("");
         etLocationFrom.setText("");
         etPalletFrom.setText("");
-        etPalletTo.setText("");
         etSku.setText("");
         etQty.setText("");
 
@@ -422,10 +415,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                         } else {
                             if (etLocationTo.getText().toString().isEmpty()) {
                                 ValidateLocation(scannedData);
-                            } else {
-                                if (etPalletTo.getText().toString().isEmpty()) {
-                                    ValidatePallet(scannedData);
-                                }
                             }
                         }
                     }
@@ -1668,10 +1657,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                         etPalletFrom.setText("");
                                         cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.white));
                                         ivScanFromCont.setImageResource(R.drawable.warning_img);
-                                    } else {
-                                        etPalletTo.setText("");
-                                        cvScanToCont.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                        ivScanToCont.setImageResource(R.drawable.warning_img);
                                     }
                                     ProgressDialogUtils.closeProgressDialog();
                                     common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
@@ -1700,9 +1685,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                             cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.white));
                                             ivScanFromCont.setImageResource(R.drawable.check);
 
-                                        } else {
-                                            cvScanToCont.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                            ivScanToCont.setImageResource(R.drawable.check);
                                         }
                                     }
                                 }
@@ -1757,7 +1739,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
             inventoryDTO.setUserId(Userid);
             inventoryDTO.setAccountID(accountId);
             inventoryDTO.setContainerCode(etPalletFrom.getText().toString());
-            inventoryDTO.setToContainerCode(etPalletTo.getText().toString());
+            inventoryDTO.setToContainerCode("");
             inventoryDTO.setMaterialCode(Materialcode);
             inventoryDTO.setToLocationCode(etLocationTo.getText().toString());
             inventoryDTO.setQuantity(etQty.getText().toString());
@@ -1839,8 +1821,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                             cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
                                             ivScanSku.setImageResource(R.drawable.fullscreen_img);
 
-                                            cvScanToCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
-                                            ivScanToCont.setImageResource(R.drawable.fullscreen_img);
+
 
                                             cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
                                             ivScanFromCont.setImageResource(R.drawable.fullscreen_img);
@@ -1850,7 +1831,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
 
                                             etLocationTo.setText("");
                                             etPalletFrom.setText("");
-                                            etPalletTo.setText("");
                                             etSku.setText("");
                                             etQty.setText("");
 
@@ -2236,21 +2216,6 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
 
                                         }
 
-                                        if (!etLocationTo.getText().toString().isEmpty()) {
-
-                                            if (!etPalletFrom.getText().toString().equalsIgnoreCase(scannedData)) {
-                                                etPalletTo.setText(scannedData);
-                                                ValidatePalletCode(etPalletTo.getText().toString(), "to");
-                                            } else {
-
-                                                etPalletTo.setText("");
-                                                common.showUserDefinedAlertType(errorMessages.EMC_0034, getActivity(), getContext(), "Warning");
-                                            }
-
-                                        } else {
-                                            common.setIsPopupActive(true);
-                                            common.showUserDefinedAlertType(errorMessages.EMC_0020, getActivity(), getContext(), "Warning");
-                                        }
 
                                     } else {
                                         common.setIsPopupActive(true);
