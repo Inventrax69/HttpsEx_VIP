@@ -522,11 +522,16 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
                                 }
                                 if(scannedData.split("[-]").length != 2){
                                     common.showUserDefinedAlertType("Please scan USN only", getActivity(), getContext(), "Warning");
+                                return;
                                 }else {
+                                    lblReceivedQty.setText("1");
                                     PSN = scannedData;
                                     scannedData = scannedData.split("[-]", 2)[0];
                                 }
 
+                            }else {
+                                common.showUserDefinedAlertType("Please scan USN only", getActivity(), getContext(), "Warning");
+                                return;
                             }
                         }
                        /*if(scannedData.split("[-]").length != 2){
@@ -1462,7 +1467,10 @@ public class OBDPickingDetailsFragment extends Fragment implements View.OnClickL
             oOutboundDTO.setOutboundID(pickobdId);
             oOutboundDTO.setLocation(lblLocationNo.getText().toString());
             oOutboundDTO.setPalletNo(etPallet.getText().toString());
-            oOutboundDTO.setPickedQty(lblReceivedQty.getText().toString());
+            if(isPSN.equalsIgnoreCase("1"))
+                oOutboundDTO.setPickedQty("1");
+            else
+                oOutboundDTO.setPickedQty(lblReceivedQty.getText().toString());
             oOutboundDTO.setAssignedID(assignedId);
             oOutboundDTO.setToCartonNo(etPalletTo.getText().toString());
             oOutboundDTO.setSODetailsID(soDetailsId);
