@@ -275,5 +275,10 @@ public interface ApiInterface {
     @POST("Scan/ValidateSO")
     Call<String> ValidateSO(@Body WMSCoreMessage oRequest);
 
+    @POST("Inbound/GeneratePutawaySuggestions")
+    Call <String> GeneratePutawaySuggestions(@Body WMSCoreMessage oRequest);
+
+    @POST("Transfers/TransferPalletToLocation_Putaway")
+    Call<String> TransferPalletToLocation_Putaway(@Body WMSCoreMessage oRequest);
 
 }

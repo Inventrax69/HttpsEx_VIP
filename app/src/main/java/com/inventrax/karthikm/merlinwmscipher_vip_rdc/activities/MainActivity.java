@@ -45,6 +45,7 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PackingFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PackingInfoFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PalletTransfersFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PalletizationFragment;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayDetailsFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayHeaderFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.SortingFragment;
@@ -240,6 +241,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
                 }
                 if (fragment != null && fragment.isVisible() && fragment instanceof PutawayHeaderFragment) {
                     ((PutawayHeaderFragment) fragment).myScannedData(MainActivity.this, ScannedData);
+                }
+                if (fragment != null && fragment.isVisible() && fragment instanceof PutawayDetailsFragment) {
+                    ((PutawayDetailsFragment) fragment).myScannedData(MainActivity.this, ScannedData);
                 }
             }
         }

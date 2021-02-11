@@ -102,7 +102,7 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         mainListInbound.add("Receiving");
         mainListInbound.add("Palletization");
 //        mainListInbound.add("Putaway");
-        mainListInbound.add("Pallet Transfers");
+        //mainListInbound.add("Pallet Transfers");
         mainListInbound.add("Putaway");
 
         // Adding child data List two
@@ -169,7 +169,7 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         mainListInbound.add("Receiving");
         mainListInbound.add("Palletization");
 //        mainListInbound.add("Putaway");
-        mainListInbound.add("Pallet Transfers");
+        //mainListInbound.add("Pallet Transfers");
         mainListInbound.add("Putaway");
 
         // Adding child data List two

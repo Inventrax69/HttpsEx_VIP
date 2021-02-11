@@ -9,6 +9,25 @@ public class MaterialInfo {
     public double Qty;
     public String Location;
     public String SuggestionId;
+    public String WareHouseID;
+    public String TenantID;
+
+
+    public String getWareHouseID() {
+        return WareHouseID;
+    }
+
+    public void setWareHouseID(String wareHouseID) {
+        WareHouseID = wareHouseID;
+    }
+
+    public String getTenantID() {
+        return TenantID;
+    }
+
+    public void setTenantID(String tenantID) {
+        TenantID = tenantID;
+    }
 
     public String getSuggestionId() {
         return SuggestionId;

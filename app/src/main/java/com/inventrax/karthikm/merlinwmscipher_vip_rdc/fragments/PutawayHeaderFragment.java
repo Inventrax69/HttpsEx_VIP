@@ -61,9 +61,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-/**
- * Created by Prasanna.ch on 05/08/2018.
- */
 
 public class PutawayHeaderFragment extends Fragment implements View.OnClickListener, BarcodeReader.TriggerListener, BarcodeReader.BarcodeListener {
 
@@ -373,7 +370,7 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
 
 
     /*
-          Generating the Suggestions based on Pallet Scanning
+          Generating the Suggestions based on Scanned pallet
      */
     public void GetPutawaysuggesttions() {
         if (lblScanAllPallets.getText().toString().equals("Scan Pallet")) {
@@ -384,6 +381,7 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
         message = common.SetAuthentication(EndpointConstants.Inventory, getContext());
         InventoryDTO iventoryDTO = new InventoryDTO();
         iventoryDTO.setContainerCode(lblScanAllPallets.getText().toString());
+        iventoryDTO.setUserId(userId);
         message.setEntityObject(iventoryDTO);
 
 
@@ -395,8 +393,7 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
             // if (NetworkUtils.isInternetAvailable()) {
             // Calling the Interface method
             ProgressDialogUtils.showProgressDialog("Please Wait");
-            Log.v("ABCDE",new Gson().toJson(message));
-         //   call = apiService.GeneratePutawaySuggestions(message);
+            call = apiService.GeneratePutawaySuggestions(message);
             // } else {
             // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
             // return;
@@ -468,10 +465,10 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
                                     MaterialInfo materialInfo = new MaterialInfo();
                                     materialInfo.setMcode(inventoryDTO.getMaterialCode());
                                     materialInfo.setLocation(inventoryDTO.getLocationCode());
-                                    materialInfo.setQty(Double.parseDouble(inventoryDTO.getQuantity()));
+                                    materialInfo.setQty((int)Double.parseDouble(inventoryDTO.getQuantity()));
                                     materialInfo.setSuggestionId(inventoryDTO.getSuggestionID());
-                                  //  materialInfo.setWareHouseID(inventoryDTO.getWareHouseID());
-                                   // materialInfo.setTenantID(inventoryDTO.getTenantID());
+                                    materialInfo.setWareHouseID(inventoryDTO.getWarehouseId());
+                                    materialInfo.setTenantID(inventoryDTO.getTenantID());
                                     palletInfo.setPalletCode(inventoryDTO.getContainerCode());
                                     lstMaterilinfo.add(materialInfo);
                                 }
@@ -487,13 +484,20 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
 
                                 for (int Palletlist = 0; Palletlist < palletInfo.getMaterialinfo().size(); Palletlist++) {
                                     // Adding the Loc,Matrial,Qty to the list
-                                    lstLocMaterialQty.add(palletInfo.getMaterialinfo().get(Palletlist).getLocation() + System.getProperty("line.separator") +
+                                    /*lstLocMaterialQty.add(palletInfo.getMaterialinfo().get(Palletlist).getLocation() + System.getProperty("line.separator") +
                                             palletInfo.getMaterialinfo().get(Palletlist).getMcode() + "/"
                                             + palletInfo.getMaterialinfo().get(Palletlist).getQty() +
                                             "/" + palletInfo.getMaterialinfo().get(Palletlist).getSuggestionId());
-                                           /* +"/" + palletInfo.getMaterialinfo().get(Palletlist).getTenantID()+"/"
+                                           *//* +"/" + palletInfo.getMaterialinfo().get(Palletlist).getTenantID()+"/"
                                             + palletInfo.getMaterialinfo().get(Palletlist).getWareHouseID());
                                 */
+
+                                    lstLocMaterialQty.add(palletInfo.getMaterialinfo().get(Palletlist).getLocation() + System.getProperty("line.separator") +
+                                            palletInfo.getMaterialinfo().get(Palletlist).getMcode() + "/"
+                                            + (int)palletInfo.getMaterialinfo().get(Palletlist).getQty() +
+                                            "/" + palletInfo.getMaterialinfo().get(Palletlist).getSuggestionId()
+                                            +"/" + palletInfo.getMaterialinfo().get(Palletlist).getTenantID()+"/"
+                                            + palletInfo.getMaterialinfo().get(Palletlist).getWareHouseID());
                                 }
                                 // Adding header and Child to Map
                                 lstLocaMaterialInfo.put(palletInfo.getPalletCode(), lstLocMaterialQty);

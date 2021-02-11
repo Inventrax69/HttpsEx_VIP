@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.R;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayDetailsFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.FragmentUtils;
 
@@ -27,6 +28,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private HashMap<String, List<String>> _listDataChild;
 	Fragment fragment=null;
 	private FragmentActivity fragmentActivity;
+	TextView lblListHeader;
 
 	public ExpandableListAdapter(FragmentActivity fragmentActivity,Context context, List<String> listDataHeader,
 
@@ -68,14 +70,22 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
-				bundle.putString("SuggestedId", childText.split("[/]", 2)[1]);
-				PutawayFragment putawayFragment = new PutawayFragment();
-				putawayFragment.setArguments(bundle);
-				FragmentUtils.replaceFragmentWithBackStack(fragmentActivity, R.id.container_body, putawayFragment);
+				String str = childText.replace("\r","").replace("\n","/");
+				bundle.putString("SuggestedId", str.split("[/]", 6)[3]);
+				bundle.putString("SuggestedSKU", str.split("[/]", 6)[1]);
+				bundle.putString("SuggestedQty", str.split("[/]", 6)[2]);
+				bundle.putString("suggestedLoc", str.split("[/]", 6)[0]);
+				bundle.putString("tenantId", str.split("[/]", 6)[4]);
+				bundle.putString("warehouseId", str.split("[/]", 6)[5]);
+				bundle.putString("palletNumber", lblListHeader.getText().toString());
+
+				PutawayDetailsFragment putawayDetailsFragment = new PutawayDetailsFragment();
+				putawayDetailsFragment.setArguments(bundle);
+				FragmentUtils.replaceFragmentWithBackStack(fragmentActivity, R.id.container_body, putawayDetailsFragment);
 			}
 		});
 
-		txtListChild.setText(childText.split("[/]", 2)[0]);
+		txtListChild.setText(childText.split("[/]", 2)[0] + System.getProperty("line.separator") + childText.split("[/]", 2)[1].split("[/]", 2)[0]);
 		return convertView;
 	}
 
@@ -110,7 +120,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			convertView = infalInflater.inflate(R.layout.list_group, null);
 		}
 
-		TextView lblListHeader = (TextView) convertView
+		lblListHeader = (TextView) convertView
 				.findViewById(R.id.lblListHeader);
 		lblListHeader.setTypeface(null, Typeface.BOLD);
 		lblListHeader.setText(headerTitle);
