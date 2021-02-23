@@ -291,8 +291,47 @@ public class UnloadingFragment extends Fragment implements View.OnClickListener 
                                     _lstINBNames.add(lstDto.get(i).getStoreRefNo());
                                 }
 
+                                /* To remove the duplicate job orders */
 
-                                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, _lstINBNames);
+                                // Copy the list.
+                                ArrayList<String> newList = new ArrayList<>();
+                                newList = (ArrayList<String>) _lstINBNames;
+
+                                // Iterate
+                                for (int i = 0; i < _lstINBNames.size(); i++) {
+                                    for (int j = _lstINBNames.size() - 1; j >= i; j--) {
+                                        // If i is j, then it's the same object and don't need to be compared.
+                                        if (i == j) {
+                                            continue;
+                                        }
+                                        // If the compared objects are equal, remove them from the copy and break
+                                        // to the next loop
+                                        if (_lstINBNames.get(i).equals(_lstINBNames.get(j))) {
+                                            newList.remove(_lstINBNames.get(i));
+                                            break;
+                                        }
+                                        //System.out.println("" + i + "," + j + ": " + lstJobOrder.get(i) + "-" + lstJobOrder.get(j));
+                                    }
+                                }
+
+                                for (int i = 0; i < newList.size(); i++) {
+                                    for (int j = newList.size() - 1; j >= i; j--) {
+                                        // If i is j, then it's the same object and don't need to be compared.
+                                        if (i == j) {
+                                            continue;
+                                        }
+                                        // If the compared objects are equal, remove them from the copy and break
+                                        // to the next loop
+                                        if (newList.get(i).equals(newList.get(j))) {
+                                            newList.remove(newList.get(i));
+                                            break;
+                                        }
+                                        //System.out.println("" + i + "," + j + ": " + lstJobOrder.get(i) + "-" + lstJobOrder.get(j));
+                                    }
+                                }
+
+
+                                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, newList);
                                 spinnerSelectStRef.setAdapter(arrayAdapter);
                                 ProgressDialogUtils.closeProgressDialog();
 
@@ -358,7 +397,46 @@ public class UnloadingFragment extends Fragment implements View.OnClickListener 
                     }
                 }
 
-                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, vehicles);
+                /* To remove the duplicate job orders */
+
+                // Copy the list.
+                ArrayList<String> newList = new ArrayList<>();
+                newList = (ArrayList<String>) vehicles;
+
+                // Iterate
+                for (int i = 0; i < vehicles.size(); i++) {
+                    for (int j = vehicles.size() - 1; j >= i; j--) {
+                        // If i is j, then it's the same object and don't need to be compared.
+                        if (i == j) {
+                            continue;
+                        }
+                        // If the compared objects are equal, remove them from the copy and break
+                        // to the next loop
+                        if (vehicles.get(i).equals(vehicles.get(j))) {
+                            newList.remove(vehicles.get(i));
+                            break;
+                        }
+                        //System.out.println("" + i + "," + j + ": " + lstJobOrder.get(i) + "-" + lstJobOrder.get(j));
+                    }
+                }
+
+                for (int i = 0; i < newList.size(); i++) {
+                    for (int j = newList.size() - 1; j >= i; j--) {
+                        // If i is j, then it's the same object and don't need to be compared.
+                        if (i == j) {
+                            continue;
+                        }
+                        // If the compared objects are equal, remove them from the copy and break
+                        // to the next loop
+                        if (newList.get(i).equals(newList.get(j))) {
+                            newList.remove(newList.get(i));
+                            break;
+                        }
+                        //System.out.println("" + i + "," + j + ": " + lstJobOrder.get(i) + "-" + lstJobOrder.get(j));
+                    }
+                }
+
+                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, newList);
                 spinnerSelectVehicle.setAdapter(arrayAdapter);
 
             }
