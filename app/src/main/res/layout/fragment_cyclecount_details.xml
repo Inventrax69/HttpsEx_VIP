@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_weight="0.8"
-                android:weightSum="3">
+                android:weightSum="2">
 
 
                 <LinearLayout
@@ -146,6 +146,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.CardView
@@ -247,20 +248,20 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txtInputLayoutContainer"
+                    android:id="@+id/txtInputLayoutCCQty"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/etContainer"
+                        android:id="@+id/etCCQty"
                         style="@style/editTextStyleSmall"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:enabled="false"
-                        android:hint="@string/hintContainer"
-                        android:inputType="text"
+                        android:hint="@string/hintCCQty"
+                        android:inputType="number"
                         android:singleLine="true" />
+
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -403,22 +404,7 @@
                 android:weightSum="2">
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txtInputLayoutCCQty"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
 
-                    <EditText
-                        android:id="@+id/etCCQty"
-                        style="@style/editTextStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/hintCCQty"
-                        android:inputType="number"
-                        android:singleLine="true" />
-
-                </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"

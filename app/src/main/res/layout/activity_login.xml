@@ -36,7 +36,7 @@
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="110dp"
             android:layout_height="45dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true">

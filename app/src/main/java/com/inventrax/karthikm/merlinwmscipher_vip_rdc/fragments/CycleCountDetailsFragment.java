@@ -84,12 +84,12 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
 
     private Button btnConfirm, btnBinComplete, btnClear, btnExportCC, btnCloseExport;
     private TextView lblCycleCount, lblScannedSku;
-    private CardView cvScanLocation, cvScanContainer, cvScanSKU;
+    private CardView cvScanLocation,  cvScanSKU;
     private TextInputLayout txtInputLayoutLocation, txtInputLayoutContainer, txtInputLayoutSerial, txtInputLayoutBatch, txtInputLayoutMfgDate,
             txtInputLayoutExpDate, txtInputLayoutProjectRef, txtInputLayoutCCQty, txtInputLayoutMRP;
 
-    private EditText etLocation, etContainer, etSerial, etBatch, etMfgDate, etExpDate, etProjectRef, etCCQty, etCCMRP;
-    private ImageView ivScanLocation, ivScanContainer, ivScanSKU;
+    private EditText etLocation, etSerial, etBatch, etMfgDate, etExpDate, etProjectRef, etCCQty, etCCMRP;
+    private ImageView ivScanLocation, ivScanSKU;
     private RelativeLayout rlCC, rlCCExport;
     private RecyclerView rvPendingCC;
 
@@ -175,11 +175,9 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         rvPendingCC.setLayoutManager(linearLayoutManager);
 
         cvScanLocation = (CardView) rootView.findViewById(R.id.cvScanLocation);
-        cvScanContainer = (CardView) rootView.findViewById(R.id.cvScanContainer);
         cvScanSKU = (CardView) rootView.findViewById(R.id.cvScanSKU);
 
         ivScanLocation = (ImageView) rootView.findViewById(R.id.ivScanLocation);
-        ivScanContainer = (ImageView) rootView.findViewById(R.id.ivScanContainer);
         ivScanSKU = (ImageView) rootView.findViewById(R.id.ivScanSKU);
 
         btnBinComplete = (Button) rootView.findViewById(R.id.btnBinComplete);
@@ -196,7 +194,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         tvLevel = (TextView) rootView.findViewById(R.id.tvLevel);
 
         etLocation = (EditText) rootView.findViewById(R.id.etLocation);
-        etContainer = (EditText) rootView.findViewById(R.id.etContainer);
         etSerial = (EditText) rootView.findViewById(R.id.etSerial);
         etMfgDate = (EditText) rootView.findViewById(R.id.etMfgDate);
         etBatch = (EditText) rootView.findViewById(R.id.etBatch);
@@ -219,7 +216,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         });
 
         txtInputLayoutLocation = (TextInputLayout) rootView.findViewById(R.id.txtInputLayoutLocation);
-        txtInputLayoutContainer = (TextInputLayout) rootView.findViewById(R.id.txtInputLayoutContainer);
         txtInputLayoutBatch = (TextInputLayout) rootView.findViewById(R.id.txtInputLayoutBatch);
         txtInputLayoutSerial = (TextInputLayout) rootView.findViewById(R.id.txtInputLayoutSerial);
         txtInputLayoutMfgDate = (TextInputLayout) rootView.findViewById(R.id.txtInputLayoutMfgDate);
@@ -265,7 +261,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         btnCloseExport.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
         btnExportCC.setOnClickListener(this);
-        cvScanContainer.setOnClickListener(this);
+
 
         if (scanType.equals("Auto")) {
             btnConfirm.setEnabled(false);
@@ -377,8 +373,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                 } else {
                     clearFields1();
                     isPalletScanned = true;
-                    cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.white));
-                    ivScanContainer.setImageResource(R.drawable.check);
                 }
 
                 break;
@@ -490,9 +484,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                 if (!isValidLocation) {
                     ValidateLocation(scannedData);
                 } else {
-                    if (!isPalletScanned) {
-                        ValidatePallet(scannedData);
-                    } else {
+
 
                         if (ScanValidator.isRSNScanned(scannedData)) {
                             scannedData = scannedData.split("[-]", 2)[0];
@@ -500,7 +492,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                         }
 
                         ValiDateMaterial(scannedData);
-                    }
+
                 }
 
 
@@ -556,124 +548,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         }
     }
 
-    public void chekPalletLocation() {
-        try {
-            WMSCoreMessage message = new WMSCoreMessage();
-            message = common.SetAuthentication(EndpointConstants.CycleCount, getContext());
-            CycleCountDTO cycleCountDTO = new CycleCountDTO();
-            cycleCountDTO.setUserId(userId);
-            cycleCountDTO.setAccountID(accountId);
-            cycleCountDTO.setWarehouseID(warehouseId);
-            cycleCountDTO.setTenantId(tenantId);
-            cycleCountDTO.setLocation(etLocation.getText().toString());
-            cycleCountDTO.setPalletNo(etContainer.getText().toString());
-
-            message.setEntityObject(cycleCountDTO);
-
-            Call<String> call = null;
-            ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
-
-            try {
-                //Checking for Internet Connectivity
-                // if (NetworkUtils.isInternetAvailable()) {
-                // Calling the Interface method
-                ProgressDialogUtils.showProgressDialog("Please Wait");
-                call = apiService.ChekPalletLocation(message);
-                // } else {
-                // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
-                // return;
-                // }
-
-            } catch (Exception ex) {
-                try {
-                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "003_01", getActivity());
-                    logException();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ProgressDialogUtils.closeProgressDialog();
-                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
-            }
-            try {
-                //Getting response from the method
-                call.enqueue(new Callback<String>() {
-
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
-                        if (response.body() != null) {
-
-                            core = gson.fromJson(response.body().toString(), WMSCoreMessage.class);
-                            if ((core.getType().toString().equals("Exception"))) {
-                                List<LinkedTreeMap<?, ?>> _lExceptions = new ArrayList<LinkedTreeMap<?, ?>>();
-                                _lExceptions = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
-                                WMSExceptionMessage owmsExceptionMessage = null;
-                                for (int i = 0; i < _lExceptions.size(); i++) {
-                                    owmsExceptionMessage = new WMSExceptionMessage(_lExceptions.get(i).entrySet());
-
-                                    etContainer.setText("");
-                                    cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                    ivScanContainer.setImageResource(R.drawable.invalid_cross);
-                                    isPalletScanned = false;
-
-                                    ProgressDialogUtils.closeProgressDialog();
-                                    common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
-                                    return;
-                                }
-                            } else {
-                                List<LinkedTreeMap<?, ?>> _lInventory = new ArrayList<LinkedTreeMap<?, ?>>();
-                                _lInventory = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
-
-
-                                List<LinkedTreeMap<?, ?>> _lResult = new ArrayList<LinkedTreeMap<?, ?>>();
-                                _lResult = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
-
-                                CycleCountDTO dto = null;
-                                ProgressDialogUtils.closeProgressDialog();
-
-                                for (int i = 0; i < _lResult.size(); i++) {
-
-                                    dto = new CycleCountDTO(_lResult.get(i).entrySet());
-                                    if (dto.getResult().equals("1")) {
-                                        isPalletScanned = true;
-                                        cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                        ivScanContainer.setImageResource(R.drawable.check);
-                                    }
-                                }
-                            }
-                        } else {
-                            ProgressDialogUtils.closeProgressDialog();
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable throwable) {
-                        //Toast.makeText(LoginActivity.this, throwable.toString(), Toast.LENGTH_LONG).show();
-                        DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
-                    }
-                });
-            } catch (Exception ex) {
-                try {
-                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "003_02", getActivity());
-                    logException();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ProgressDialogUtils.closeProgressDialog();
-                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
-            }
-        } catch (Exception ex) {
-            try {
-                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "003_03", getActivity());
-                logException();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ProgressDialogUtils.closeProgressDialog();
-            DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0003);
-        }
-    }
 
     public void isBlockedLocation() {
 
@@ -994,7 +868,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
             cycleCountDTO.setTenantId(tenantId);
             cycleCountDTO.setCCName(lblCycleCount.getText().toString());
             cycleCountDTO.setLocation(etLocation.getText().toString());
-            cycleCountDTO.setPalletNo(etContainer.getText().toString());
+            cycleCountDTO.setPalletNo("");
             cycleCountDTO.setMaterialCode(lblScannedSku.getText().toString());
             cycleCountDTO.setCCQty(etCCQty.getText().toString());
             cycleCountDTO.setBatchNo(etBatch.getText().toString());
@@ -1410,16 +1284,11 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         ProgressDialogUtils.closeProgressDialog();
         common.setIsPopupActive(false);
 
-        cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
-        ivScanContainer.setImageResource(R.drawable.fullscreen_img);
-
         cvScanSKU.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
         ivScanSKU.setImageResource(R.drawable.fullscreen_img);
 
         lblScannedSku.setText("");
         materialCode = "";
-
-        etContainer.setText("");
         etExpDate.setText("");
         etMfgDate.setText("");
         etSerial.setText("");
@@ -1447,9 +1316,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
         ivScanLocation.setImageResource(R.drawable.fullscreen_img);
 
-        cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
-        ivScanContainer.setImageResource(R.drawable.fullscreen_img);
-
         cvScanSKU.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
         ivScanSKU.setImageResource(R.drawable.fullscreen_img);
 
@@ -1457,7 +1323,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         materialCode = "";
 
         etLocation.setText("");
-        etContainer.setText("");
         etExpDate.setText("");
         etMfgDate.setText("");
         etSerial.setText("");
@@ -2190,127 +2055,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
         }
     }
 
-    public void ValidatePallet(final String scannedData) {
 
-        try {
-
-            WMSCoreMessage message = new WMSCoreMessage();
-            message = common.SetAuthentication(EndpointConstants.ScanDTO, getContext());
-            ScanDTO scanDTO = new ScanDTO();
-            scanDTO.setUserID(userId);
-            scanDTO.setAccountID(accountId);
-            scanDTO.setTenantID(String.valueOf(tenantId));
-            scanDTO.setWarehouseID(String.valueOf(warehouseId));
-            scanDTO.setScanInput(scannedData);
-            // scanDTO.setInboundID(inboundId);
-            //inboundDTO.setIsOutbound("0");
-            message.setEntityObject(scanDTO);
-
-
-            Call<String> call = null;
-            ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
-
-            try {
-                //Checking for Internet Connectivity
-                // if (NetworkUtils.isInternetAvailable()) {
-                // Calling the Interface method
-                call = apiService.ValidatePallet(message);
-                ProgressDialogUtils.showProgressDialog("Please Wait");
-                // } else {
-                // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
-                // return;
-                // }
-
-            } catch (Exception ex) {
-                try {
-                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "002_01", getActivity());
-                    logException();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ProgressDialogUtils.closeProgressDialog();
-                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
-            }
-            try {
-                //Getting response from the method
-                call.enqueue(new Callback<String>() {
-
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        core = gson.fromJson(response.body().toString(), WMSCoreMessage.class);
-
-                        if ((core.getType().toString().equals("Exception"))) {
-                            List<LinkedTreeMap<?, ?>> _lExceptions = new ArrayList<LinkedTreeMap<?, ?>>();
-                            _lExceptions = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
-
-                            WMSExceptionMessage owmsExceptionMessage = null;
-                            for (int i = 0; i < _lExceptions.size(); i++) {
-                                owmsExceptionMessage = new WMSExceptionMessage(_lExceptions.get(i).entrySet());
-                            }
-
-                            isPalletScanned = false;
-                            cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.white));
-                            ivScanContainer.setImageResource(R.drawable.invalid_cross);
-                            ProgressDialogUtils.closeProgressDialog();
-                            common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
-
-                        } else {
-
-                            LinkedTreeMap<?, ?> _lResult = new LinkedTreeMap<>();
-                            _lResult = (LinkedTreeMap<?, ?>) core.getEntityObject();
-
-                            ScanDTO scanDTO1 = new ScanDTO(_lResult.entrySet());
-                            ProgressDialogUtils.closeProgressDialog();
-                            
-                            if (scanDTO1 != null) {
-                                if (scanDTO1.getScanResult()) {
-                                    isPalletScanned = true;
-                                    cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                    ivScanContainer.setImageResource(R.drawable.check);
-                                    etContainer.setText(scannedData);
-                                    chekPalletLocation();
-                                } else {
-                                    isPalletScanned = false;
-                                    cvScanContainer.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                    ivScanContainer.setImageResource(R.drawable.warning_img);
-                                    common.showUserDefinedAlertType(errorMessages.EMC_0009, getActivity(), getContext(), "Warning");
-                                }
-                            } else {
-                                isPalletScanned = false;
-                                common.showUserDefinedAlertType("Error while getting data", getActivity(), getContext(), "Error");
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable throwable) {
-                        //Toast.makeText(LoginActivity.this, throwable.toString(), Toast.LENGTH_LONG).show();
-                        ProgressDialogUtils.closeProgressDialog();
-                        DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
-                    }
-                });
-            } catch (Exception ex) {
-                try {
-                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "002_02", getActivity());
-                    logException();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ProgressDialogUtils.closeProgressDialog();
-                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
-            }
-        } catch (Exception ex) {
-            try {
-                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "002_03", getActivity());
-                logException();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ProgressDialogUtils.closeProgressDialog();
-            DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
-        }
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
