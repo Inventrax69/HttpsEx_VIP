@@ -309,15 +309,22 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.cvScanFromCont:
                 //isPalletScaned = true;
-                cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
-                ivScanFromCont.setImageResource(R.drawable.fullscreen_img);
-                cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
-                ivScanFromLoc.setImageResource(R.drawable.fullscreen_img);
-                etLocationFrom.setText("");
-                etPalletFrom.setText("");
-                isPalletScaned= false;
-                isLocationScaned = false;
-                Clearfields();
+
+//                MAHE
+                isPalletScaned = true;
+                cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.white));
+                ivScanFromCont.setImageResource(R.drawable.check);
+
+//                MAHE
+//            cvScanFromCont.setCardBackgroundColor(getResources().getColor(R.color.palletColor));
+//                ivScanFromCont.setImageResource(R.drawable.fullscreen_img);
+//                cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
+//                ivScanFromLoc.setImageResource(R.drawable.fullscreen_img);
+//                etLocationFrom.setText("");
+//                etPalletFrom.setText("");
+//                isPalletScaned= false;
+//                isLocationScaned = false;
+//                Clearfields();
                 break;
 
             case R.id.btnGo:
@@ -717,9 +724,13 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                     0 Sku|1 BatchNo|2 SerialNO|3 KitId|4 lineNo  ---- For SKU with 5 MSP's   *//*
                                     // Eg. : ToyCar|1|bat1|ser123|12/2/2018|12/2/2019|0|001*/
 
+//                                    MAHE
+//                                    cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
+//                                    ivScanSku.setImageResource(R.drawable.fullscreen_img);
 
-                                    cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
-                                    ivScanSku.setImageResource(R.drawable.fullscreen_img);
+                                    cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                    ivScanSku.setImageResource(R.drawable.check);
+
 
                                     /*    if (scannedData.split("[|]").length != 5) {*/
 

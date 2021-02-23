@@ -3,6 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2e859b2a8dd39f65c93d6c57b60e7e58/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2e859b2a8dd39f65c93d6c57b60e7e58/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f51b03443e9f1e13f10e7b32122bae4/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f51b03443e9f1e13f10e7b32122bae4/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f51b03443e9f1e13f10e7b32122bae4/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support.test/exposed-instrumentation-api-publish/0.5/81d0ed6618547b96baa84c6da154c88bc3a98cea/exposed-instrumentation-api-publish-0.5-javadoc.jar!/" />

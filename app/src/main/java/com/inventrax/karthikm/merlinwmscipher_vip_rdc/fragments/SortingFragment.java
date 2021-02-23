@@ -80,7 +80,6 @@ import retrofit2.Response;
 
 public class SortingFragment extends Fragment implements View.OnClickListener, BarcodeReader.TriggerListener, BarcodeReader.BarcodeListener {
 
-
     private static final String classCode = "API_FRAG_PackingFragment";
     private View rootView;
     private TextView tvOrderInfromation, tvOrderInfromationSuccess, tvScanPallet, lblScannedData, lblHu;
@@ -286,6 +285,9 @@ public class SortingFragment extends Fragment implements View.OnClickListener, B
         relativeThree.setVisibility(View.GONE);
         relativeFour.setVisibility(View.GONE);
 
+//        <Mahe>
+        btnPackComplete.setVisibility(View.GONE);
+
 
         if (scanType.equals("Auto")) {
             btnPack.setVisibility(View.INVISIBLE);
@@ -306,8 +308,6 @@ public class SortingFragment extends Fragment implements View.OnClickListener, B
             case R.id.btnPackComplete:
                 UpdatePackComplete();
                 break;
-
-
 
             case R.id.btnBackPacking:
                 relativeOne.setVisibility(View.VISIBLE);
@@ -487,7 +487,7 @@ public class SortingFragment extends Fragment implements View.OnClickListener, B
         }
     }
 
-    // sending exception to the database
+    // sending exception to the database0
     public void logException() {
         try {
 
@@ -631,7 +631,7 @@ public class SortingFragment extends Fragment implements View.OnClickListener, B
             }
         }
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_sorting);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Sorting");
     }
 
     @Override
@@ -1329,7 +1329,7 @@ public class SortingFragment extends Fragment implements View.OnClickListener, B
 
                     relativeOne.setVisibility(View.GONE);
                     relativeTwo.setVisibility(View.GONE);
-                    relativeThree.setVisibility(View.GONE);
+                    relativeThree.setVisibility(View.VISIBLE);
                     relativeFour.setVisibility(View.GONE);
 
                 } else {

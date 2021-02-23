@@ -68,7 +68,7 @@
         android:id="@+id/relativeTwo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/linear1"
@@ -109,7 +109,6 @@
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
             android:textStyle="bold" />
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_sku_list"

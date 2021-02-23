@@ -60,8 +60,8 @@ public class SkuListAdapter extends  RecyclerView.Adapter{
        //         ((skuListDTO.getSOQty().split("[.]") !=null && skuListDTO.getSOQty().split("[.]").length > 0 ) ? skuListDTO.getSOQty().split("[.]")[0] : skuListDTO.getSOQty()) );
 
         if(skuListDTO.getPackedQty() != null && skuListDTO.getPickedQty() != null)
-          ((MyViewHolder) holder).txtQty.setText(skuListDTO.getPackedQty().split("[.]")[0]);
-                                    // +" / " + skuListDTO.getPickedQty().split("[.]")[0]
+          ((MyViewHolder) holder).txtQty.setText(skuListDTO.getPickedQty().split("[.]")[0]);
+                                    // +" / " + skuListDTO.getPackedQty().split("[.]")[0]
 /*
         ((MyViewHolder) holder).view.setOnClickListener(new View.OnClickListener() {
             @Override

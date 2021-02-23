@@ -298,7 +298,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                     rlSelect.setVisibility(View.GONE);
                     rlInternalTransfer.setVisibility(View.VISIBLE);
                     // method to get the storage locations
-                    //GetBinToBinStorageLocations();
+//                    GetBinToBinStorageLocations();
 
                 } else {
                     common.showUserDefinedAlertType(errorMessages.EMC_0011, getActivity(), getContext(), "Error");
@@ -408,9 +408,11 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                         ValidatePallet(scannedData);
                     } else {
                         if (etSku.getText().toString().isEmpty()) {
-                            if (ScanValidator.isRSNScanned(scannedData)) {
-                                scannedData = scannedData.split("[-]", 2)[0];
-                            }
+//                            <mahe>
+//                            if (ScanValidator.isRSNScanned(scannedData)) {
+//                                scannedData = scannedData.split("[-]", 2)[0];
+//
+//                            }
                             ValiDateMaterial(scannedData);
                         } else {
                             if (etLocationTo.getText().toString().isEmpty()) {
@@ -1510,7 +1512,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                         lblMfgDate.setText("");
                                         lblExpDate.setText("");
                                         lblProjectRefNo.setText("");
-                                        etSku.setText("");
+                                     //   etSku.setText("");
 
                                         //GetBinToBinStorageLocations();
                                         common.showAlertType(owmsExceptionMessage, getActivity(), getContext());

@@ -311,8 +311,13 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
 //            ispalletisscanned();
          if (ScanValidator.isContainerScanned(scannedData)) {
                 lblScanAllPallets.setText(scannedData);
-                GetPutawaysuggesttions();
+             GetPutawaysuggesttions();
+
             }
+         else {
+             common.showUserDefinedAlertType(errorMessages.EMC_0019, getActivity(), getContext(), "Error");
+
+         }
         }
     }
 

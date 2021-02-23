@@ -21,7 +21,7 @@ package com.inventrax.karthikm.merlinwmscipher_vip_rdc.login;
 public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListener {
 
     private LoginView loginView;
-    private LoginInteractor loginInteractor;
+    private LoginInteractor   loginInteractor;
 
     public LoginPresenterImpl(LoginView loginView) {
 

@@ -100,6 +100,7 @@ public class PutawayDetailsFragment extends Fragment implements View.OnClickList
     TextView txtWarehousetName, txtTendentName, txtFromPallet, txtLocation;
     TextView lblSuggSKU, lblSuggQty;
     SDKAdapter adapter;
+    Button btnClose;
 
     // Cipher Barcode Scanner
     private final BroadcastReceiver myDataReceiver = new BroadcastReceiver() {
@@ -183,6 +184,7 @@ public class PutawayDetailsFragment extends Fragment implements View.OnClickList
                     lblSuggQty.setText(suggestedQty);
                     lblSuggSKU.setText(suggestedSKU);
                     sug_loc.setText(suggestedLoc);
+                    sug_loc.setEnabled(false);
 
                 } catch (Exception ex) {
                 }
@@ -191,16 +193,17 @@ public class PutawayDetailsFragment extends Fragment implements View.OnClickList
 
 
         btnBinComplete = (Button) rootView.findViewById(R.id.btnBinComplete);
-        btn_clear = (Button) rootView.findViewById(R.id.btn_clear);
+        btn_clear =(Button) rootView.findViewById(R.id.btn_clear);
         btnGo = (Button) rootView.findViewById(R.id.btnGo);
 
 //        //<mahe>
-//        btnCloseOne=(Button) rootView.findViewById(R.id.btnClose);
+        btnClose=(Button) rootView.findViewById(R.id.btnClose);
 
-        btnBinComplete.setOnClickListener(this);
+         btnBinComplete.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
         btnGo.setOnClickListener(this);
         cvScanFromCont.setOnClickListener(this);
+        btnClose.setOnClickListener(this);
 
         exceptionLoggerUtils = new ExceptionLoggerUtils();
         errorMessages = new ErrorMessages();
@@ -279,9 +282,9 @@ public class PutawayDetailsFragment extends Fragment implements View.OnClickList
                 break;
 
 //            //<mahe>
-//            case R.id.btnClose:
-//                PalletTransfersFragment palletTransfersFragment=new PalletTransfersFragment();
-//                FragmentUtils.replaceFragmentWithBackStack(getActivity(),R.id.container_body,palletTransfersFragment);
+            case R.id.btnClose:
+                PutawayHeaderFragment putawayHeaderFragment=new PutawayHeaderFragment();
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(),R.id.container_body,putawayHeaderFragment);
         }
     }
 
@@ -315,21 +318,25 @@ public class PutawayDetailsFragment extends Fragment implements View.OnClickList
 
             if (!ProgressDialogUtils.isProgressActive()) {
 
-                if (scannedData.equalsIgnoreCase(sug_loc.getText().toString())) {
-                    txtLocation.setText(scannedData);
-                    cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
-                    ivScanLocation.setImageResource(R.drawable.check);
 
-                } else {
+//                if (scannedData.equalsIgnoreCase(sug_loc.getText().toString())) {
+                    ValidateLocation(scannedData);
+//                    txtLocation.setText(scannedData);
+//                    cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
+////                    ivScanLocation.setImageResource(R.drawable.check);
+//
+//                }
+//                else {
+//
+//                    txtLocation.setText("");
+//                    cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                    ivScanLocation.setImageResource(R.drawable.warning_img);
+//
+//                    common.showUserDefinedAlertType(errorMessages.EMC_0016, getActivity(), getContext(), "Warning");
+//                }
 
-                    txtLocation.setText("");
-                    cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
-                    ivScanLocation.setImageResource(R.drawable.warning_img);
-
-                    common.showUserDefinedAlertType(errorMessages.EMC_0016, getActivity(), getContext(), "Warning");
-                }
-
-            } else {
+            }
+            else {
                 if (!Common.isPopupActive()) {
                     common.showUserDefinedAlertType(errorMessages.EMC_080, getActivity(), getContext(), "Error");
 
@@ -492,6 +499,166 @@ public class PutawayDetailsFragment extends Fragment implements View.OnClickList
         } else {
 
             common.showUserDefinedAlertType(errorMessages.EMC_0030, getActivity(), getContext(), "Error");
+        }
+    }
+
+    public void ValidateLocation(final String scannedData) {
+        try {
+
+            WMSCoreMessage message = new WMSCoreMessage();
+            message = common.SetAuthentication(EndpointConstants.ScanDTO, getContext());
+            ScanDTO scanDTO = new ScanDTO();
+            scanDTO.setUserID(Userid);
+            scanDTO.setAccountID(accountId);
+            // scanDTO.setTenantID(String.valueOf(tenantID));
+            scanDTO.setWarehouseID(String.valueOf(whId));
+            scanDTO.setScanInput(scannedData);
+            // scanDTO.setInboundID(inboundId);
+            //inboundDTO.setIsOutbound("0");
+            message.setEntityObject(scanDTO);
+
+
+            Call<String> call = null;
+            ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
+
+            try {
+                //Checking for Internet Connectivity
+                // if (NetworkUtils.isInternetAvailable()) {
+                // Calling the Interface method
+                call = apiService.ValidateLocation(message);
+                ProgressDialogUtils.showProgressDialog("Please Wait");
+                // } else {
+                // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
+                // return;
+                // }
+
+            } catch (Exception ex) {
+                try {
+                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "002_01", getActivity());
+                    logException();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ProgressDialogUtils.closeProgressDialog();
+                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
+            }
+            try {
+                //Getting response from the method
+                call.enqueue(new Callback<String>() {
+
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        core = gson.fromJson(response.body().toString(), WMSCoreMessage.class);
+
+                        if ((core.getType().toString().equals("Exception"))) {
+                            List<LinkedTreeMap<?, ?>> _lExceptions = new ArrayList<LinkedTreeMap<?, ?>>();
+                            _lExceptions = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
+
+                            txtLocation.setText("");
+                            cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
+                            ivScanLocation.setImageResource(R.drawable.warning_img);
+
+                            common.showUserDefinedAlertType(errorMessages.EMC_0016, getActivity(), getContext(), "Warning");
+
+                            WMSExceptionMessage owmsExceptionMessage = null;
+                            for (int i = 0; i < _lExceptions.size(); i++) {
+
+                                owmsExceptionMessage = new WMSExceptionMessage(_lExceptions.get(i).entrySet());
+                            }
+
+//                            if (!isLocationScaned) {
+//                                etLocationFrom.setText("");
+//                                cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                ivScanFromLoc.setImageResource(R.drawable.invalid_cross);
+//                            } else {
+//                                etLocationTo.setText("");
+//                                cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                ivScanToLoc.setImageResource(R.drawable.invalid_cross);
+//                            }
+                            ProgressDialogUtils.closeProgressDialog();
+                            common.showAlertType(owmsExceptionMessage, getActivity(), getContext());
+                        } else {
+                            LinkedTreeMap<?, ?> _lResult = new LinkedTreeMap<>();
+                            _lResult = (LinkedTreeMap<?, ?>) core.getEntityObject();
+
+                            ScanDTO scanDTO1 = new ScanDTO(_lResult.entrySet());
+
+//                            if (scannedData.equalsIgnoreCase(sug_loc.getText().toString())) {
+                    txtLocation.setText(scannedData);
+                    cvScanLocation.setCardBackgroundColor(getResources().getColor(R.color.white));
+                    ivScanLocation.setImageResource(R.drawable.check);
+
+//                }
+//                        else {
+
+
+//                }
+
+//                            if (scanDTO1 != null) {
+//                                if (scanDTO1.getScanResult()) {
+//                                    if (!isLocationScaned) {
+//                                        etLocationFrom.setText(scannedData);
+//                                        cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                        ivScanFromLoc.setImageResource(R.drawable.check);
+//                                        isLocationScaned = true;
+//                                        //validateLocationCode(etLocationFrom.getText().toString(), "from");
+//                                    } else {
+//                                        etLocationTo.setText(scannedData);
+//                                        cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                        ivScanToLoc.setImageResource(R.drawable.check);
+//                                        //validateLocationCode(etLocationTo.getText().toString(), "to");
+//                                    }
+//                                } else {
+//                                    if (!isLocationScaned) {
+//                                        etLocationFrom.setText("");
+//                                        cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                        ivScanFromLoc.setImageResource(R.drawable.warning_img);
+//                                        isLocationScaned = false;
+//                                    } else {
+//                                        etLocationTo.setText("");
+//                                        cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                        ivScanToLoc.setImageResource(R.drawable.warning_img);
+//                                    }
+//                                    common.showUserDefinedAlertType(errorMessages.EMC_0016, getActivity(), getContext(), "Warning");
+///*                                    etLocationTo.setText("");
+//                                    cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                    ivScanToLoc.setImageResource(R.drawable.warning_img);
+//                                    common.showUserDefinedAlertType(errorMessages.EMC_0010, getActivity(), getContext(), "Warning");*/
+//                                }
+//                            }
+//                            else {
+//                                common.showUserDefinedAlertType("Error while getting data", getActivity(), getContext(), "Error");
+//                            }
+                            ProgressDialogUtils.closeProgressDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable throwable) {
+                        //Toast.makeText(LoginActivity.this, throwable.toString(), Toast.LENGTH_LONG).show();
+                        ProgressDialogUtils.closeProgressDialog();
+                        DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
+                    }
+                });
+            } catch (Exception ex) {
+                try {
+                    exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "002_02", getActivity());
+                    logException();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ProgressDialogUtils.closeProgressDialog();
+                DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0001);
+            }
+        } catch (Exception ex) {
+            try {
+                exceptionLoggerUtils.createExceptionLog(ex.toString(), classCode, "002_03", getActivity());
+                logException();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ProgressDialogUtils.closeProgressDialog();
+            DialogUtils.showAlertDialog(getActivity(), errorMessages.EMC_0002);
         }
     }
 

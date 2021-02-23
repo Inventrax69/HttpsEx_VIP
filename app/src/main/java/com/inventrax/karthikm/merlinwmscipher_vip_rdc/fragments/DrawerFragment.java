@@ -414,10 +414,11 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new UnloadingFragment());
             }
             break;
-            case "Palletization": {
-                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationFragment());
-            }
-            break;
+//            case "Palletization": {
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationFragment());
+//            }
+//            break;
+
 //            case "Putaway": {
 //                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayFragment());
 //            }
@@ -430,6 +431,10 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new OBDPickingHeaderFragment());
             }
             break;
+//            case "OBD Picking": {
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new VLPDPickingHeaderFragment());
+//            }
+//            break;
 //            case "Packing": {
 //                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PackingFragment());
 //            }
@@ -472,6 +477,10 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
             break;
             case "Putaway": {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayHeaderFragment());
+            }
+            break;
+            case "Palletization": {
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationUnloadingFragment());
             }
             break;
             default:

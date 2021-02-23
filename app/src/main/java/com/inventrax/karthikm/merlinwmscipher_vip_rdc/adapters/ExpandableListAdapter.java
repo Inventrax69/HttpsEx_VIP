@@ -50,6 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		return childPosition;
 	}
 
+
 	@Override
 	public View getChildView(int groupPosition, final int childPosition,
 							 boolean isLastChild, View convertView, final ViewGroup parent) {
