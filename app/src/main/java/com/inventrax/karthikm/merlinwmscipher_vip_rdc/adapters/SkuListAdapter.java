@@ -95,16 +95,19 @@ public class SkuListAdapter extends  RecyclerView.Adapter{
             txtMCode = (TextView) itemView.findViewById(R.id.txtMCode);
             view=itemView;
 
+            itemView.setEnabled(false);
             //on item click
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        int pos = getAdapterPosition();
-                        if (pos != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(pos);
-                        }
-                    }
+
+
+//                    if (listener != null) {
+//                        int pos = getAdapterPosition();
+//                        if (pos != RecyclerView.NO_POSITION) {
+//                            listener.onItemClick(pos);
+//                        }
+//                    }
                 }
 
             });

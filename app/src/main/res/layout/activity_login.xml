@@ -26,6 +26,7 @@
             android:layout_marginTop="14dp"
             android:layout_toStartOf="@+id/spinnerSelectDivision"
             android:text="Scan Type"
+            android:visibility="gone"
             android:layout_toLeftOf="@+id/spinnerSelectDivision">
 
         </TextView>
@@ -35,6 +36,7 @@
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="110dp"
             android:layout_height="45dp"
+            android:visibility="gone"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true">
@@ -84,7 +86,8 @@
             android:drawablePadding="@dimen/activity_login_padding_left"
             android:hint="@string/userHint"
             android:inputType="textEmailAddress"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:layout_alignParentLeft="true" />
 
         <EditText
             android:id="@+id/etPass"
@@ -178,5 +181,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/settings" />
+        android:background="@drawable/settings"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp" />
 </RelativeLayout>
