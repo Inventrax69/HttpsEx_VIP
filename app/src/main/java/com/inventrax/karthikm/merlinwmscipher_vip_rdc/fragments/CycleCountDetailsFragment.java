@@ -1004,7 +1004,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
             cycleCountDTO.setExpDate(etExpDate.getText().toString());
             //cycleCountDTO.setCount(tvCount.getText().toString());
             cycleCountDTO.setMRP(etCCMRP.getText().toString());
-            cycleCountDTO.setStorageLocation(storageLoc);
+            cycleCountDTO.setStorageLocation("");
             message.setEntityObject(cycleCountDTO);
 
 
@@ -1017,7 +1017,6 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                 // Calling the Interface method
                 ProgressDialogUtils.showProgressDialog("Please Wait");
                 call = apiService.UpsertCycleCount(message);
-
                 // } else {
                 // DialogUtils.showAlertDialog(getActivity(), "Please enable internet");
                 // return;
@@ -2015,7 +2014,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
 
                                     materialCode = scanDTO1.getSkuCode();
 
-                                    GetActivestockStorageLocations();
+                                    //GetActivestockStorageLocations();
 
                                     lblScannedSku.setText(materialCode);
                                     etBatch.setText(scanDTO1.getBatch());
