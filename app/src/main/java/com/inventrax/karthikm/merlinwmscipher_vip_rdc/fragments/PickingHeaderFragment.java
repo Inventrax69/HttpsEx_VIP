@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -103,6 +104,7 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
    PickingAdapter pickingAdapter;
   RelativeLayout rlPickListOne;
   TextView pickingoOdNo;
+  private LinearLayout llPickingSugg;
 
     public PickingHeaderFragment() {
 
@@ -123,6 +125,7 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
         userId = sp.getString("RefUserId", "");
         accountId = sp.getString("AccountId", "");
 
+
         cvScanSONumber = (CardView) rootView.findViewById(R.id.cvScanSONumber);
         ivScanSONumber = (ImageView) rootView.findViewById(R.id.ivScanSONumber);
 
@@ -130,6 +133,8 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
         spinnerSelectPickList.setOnItemSelectedListener(this);
         btnGo = (Button) rootView.findViewById(R.id.btnGo);
         btnClear = (Button) rootView.findViewById(R.id.btnClear);
+
+        llPickingSugg = (LinearLayout) rootView.findViewById(R.id.llPickingSugg);
 
         gson = new GsonBuilder().create();
         btnGo.setOnClickListener(this);
@@ -175,6 +180,20 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
             }
         });
 
+        if (getArguments()!=null) {
+            pickRefNo = getArguments().getString("ObdNum");
+            pickobdId = getArguments().getString("pickobdId");
+
+            if(!pickRefNo.isEmpty()){
+                rlPickListOne.setVisibility(View.GONE);
+                llPickingSugg.setVisibility(View.VISIBLE);
+                GetOBDItemsForPicking();
+            }else {
+                rlPickListOne.setVisibility(View.VISIBLE);
+                llPickingSugg.setVisibility(View.GONE);
+            }
+
+        }
 
 
     }

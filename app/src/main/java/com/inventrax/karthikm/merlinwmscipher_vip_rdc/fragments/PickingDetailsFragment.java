@@ -289,19 +289,24 @@ if (getArguments()!=null) {
          @Override
          public void onClick(DialogInterface dialog, int which) {
 
-//             common.showUserDefinedAlertType("Qty. is already picked” ", getActivity(), getContext(), "Error");
-//             btnPick.setVisibility(View.GONE);
+//           common.showUserDefinedAlertType("Qty. is already picked” ", getActivity(), getContext(), "Error");
+//           btnPick.setVisibility(View.GONE);
+             Bundle bundle = new Bundle();
+             bundle.putString("ObdNum", pickOBDno);
+             bundle.putString("pickobdId", pickobdId);
+
              PickingHeaderFragment pickingHeaderFragment=new PickingHeaderFragment();
+             pickingHeaderFragment.setArguments(bundle);
              FragmentUtils.replaceFragmentWithBackStack(getActivity(),R.id.container_body,pickingHeaderFragment);
          }
      });
-     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+     /*builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
          @Override public void onClick(DialogInterface dialog, int which) {
 
              PickingHeaderFragment pickingHeaderFragment=new PickingHeaderFragment();
              FragmentUtils.replaceFragmentWithBackStack(getActivity(),R.id.container_body,pickingHeaderFragment);
          }
-     });
+     });*/
      builder.create().show(); // Create the Dialog and display it to the user
 
         }
