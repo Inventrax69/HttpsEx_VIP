@@ -176,7 +176,7 @@
     <string name="complete">Complete</string>
     <string name="location">Location </string>
     <string name="material">Material </string>
-    <string name="scanToLocation">To Loc.</string>
+    <string name="scanToLocation">To Location</string>
 
     <string name="OBDPicking">OBD Picking</string>
     <string name="selectPickList">Pick List</string>

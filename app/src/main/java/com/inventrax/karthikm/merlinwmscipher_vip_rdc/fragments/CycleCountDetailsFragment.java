@@ -787,6 +787,11 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
                                         cvScanSKU.setCardBackgroundColor(getResources().getColor(R.color.white));
                                         ivScanSKU.setImageResource(R.drawable.check);
 
+//                                        <MAHE>
+                                        etCCQty.setText("1");
+                                            upsertCycleCount();
+
+                         /*           <MAHE>
                                         if (scanType.equals("Auto")) {
 
                                             etCCQty.setText("1");
@@ -803,7 +808,7 @@ public class CycleCountDetailsFragment extends Fragment implements View.OnClickL
 
                                             common.showUserDefinedAlertType(errorMessages.EMC_0064, getActivity(), getContext(), "Warning");
                                         }
-
+*/
 
                                     } else {
                                         common.showUserDefinedAlertType(lstDto.get(i).getResult(), getActivity(), getContext(), "Error");

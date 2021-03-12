@@ -167,6 +167,7 @@ public interface ApiInterface {
     @POST("Transfers/TransferPalletToLocation")
     Call<String> TransferPalletToLocation(@Body WMSCoreMessage oRequest);
 
+
     @POST("Transfers/GetActivestockStorageLocations")
     Call<String> GetActivestockStorageLocations(@Body WMSCoreMessage oRequest);
 
@@ -281,4 +282,6 @@ public interface ApiInterface {
     @POST("Transfers/TransferPalletToLocation_Putaway")
     Call<String> TransferPalletToLocation_Putaway(@Body WMSCoreMessage oRequest);
 
+    @POST("Outbound/GetOBDItemsForPicking")
+    Call<String> GetOBDItemsForPicking(@Body WMSCoreMessage oRequest);
 }

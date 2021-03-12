@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -107,7 +108,8 @@
             android:layout_above="@id/btnClose"
             android:layout_marginBottom="10dp"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:weightSum="10"
+            tools:ignore="NotSibling">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -192,7 +194,8 @@
                         android:text="@string/container"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:layout_alignParentLeft="true" />
 
 
                 </LinearLayout>
@@ -232,7 +235,8 @@
                         android:text="@string/sku"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:layout_alignParentLeft="true" />
 
                 </LinearLayout>
 
@@ -280,7 +284,8 @@
                         android:text="@string/scanToLocation"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:layout_alignParentLeft="true" />
 
                 </LinearLayout>
 
@@ -342,6 +347,7 @@
                         android:id="@+id/spinnerSelectSloc"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="0dp"
+                        android:visibility="invisible"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         ></com.inventrax.karthikm.merlinwmscipher_vip_rdc.searchableSpinner.SearchableSpinner>

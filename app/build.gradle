@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 25
+    compileSdkVersion 26
     lintOptions {
         abortOnError false
     }
@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId "com.inventrax.karthikm.merlinwmscipher_vip_rdc"
         minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 3
-        versionName "S1.0.3"
+        targetSdkVersion 26
+        versionCode 4
+        versionName "S1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

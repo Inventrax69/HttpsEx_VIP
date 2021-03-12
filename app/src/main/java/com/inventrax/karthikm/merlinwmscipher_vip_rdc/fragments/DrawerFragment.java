@@ -107,7 +107,8 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
 
         // Adding child data List two
         List<String> mainListOutbound  = new ArrayList<String>();
-        mainListOutbound.add("OBD Picking");
+//        mainListOutbound.add("OBD Picking");
+        mainListOutbound.add("Picking");
 //        mainListOutbound.add("Packing");
         mainListOutbound.add("Sorting");
 //        mainListOutbound.add("Packing Info");
@@ -180,6 +181,7 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         mainListOutbound.add("Load Generation");
         mainListOutbound.add("Loading");
         mainListOutbound.add("Sorting");
+        mainListOutbound.add("Picking");
 
         // Adding child data List three
         List<String> mainListHouseKeeping = new ArrayList<String>();
@@ -414,10 +416,10 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new UnloadingFragment());
             }
             break;
-//            case "Palletization": {
-//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationFragment());
-//            }
-//            break;
+            case "Palletization": {
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationFragment());
+            }
+            break;
 
 //            case "Putaway": {
 //                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayFragment());
@@ -427,10 +429,10 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletTransfersFragment());
             }
             break;
-            case "OBD Picking": {
-                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new OBDPickingHeaderFragment());
-            }
-            break;
+//            case "OBD Picking": {
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new OBDPickingHeaderFragment());
+//            }
+//            break;
 //            case "OBD Picking": {
 //                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new VLPDPickingHeaderFragment());
 //            }
@@ -479,10 +481,14 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PutawayHeaderFragment());
             }
             break;
-            case "Palletization": {
-                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationUnloadingFragment());
+            case "Picking": {
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PickingHeaderFragment());
             }
             break;
+//            case "Palletization": {
+//                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, new PalletizationUnloadingFragment());
+//            }
+//            break;
             default:
             break;
         }
@@ -503,11 +509,12 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 menuList.add(new NavDrawerItem("Pallet Transfers", R.drawable.go));
                 menuList.add(new NavDrawerItem("Putaway", R.drawable.go));
                 // Outbound
-                menuList.add(new NavDrawerItem("OBD Picking", R.drawable.go));
+//                menuList.add(new NavDrawerItem("OBD Picking", R.drawable.go));
 //                menuList.add(new NavDrawerItem("Packing", R.drawable.go));
                 menuList.add(new NavDrawerItem("Load Generation", R.drawable.go));
                 menuList.add(new NavDrawerItem("Loading", R.drawable.go));
                 menuList.add(new NavDrawerItem("Sorting", R.drawable.go));
+                menuList.add(new NavDrawerItem("Picking", R.drawable.go));
                 // HouseKeeping
                 menuList.add(new NavDrawerItem("Bin to Bin", R.drawable.go));
                 menuList.add(new NavDrawerItem("Cycle Count", R.drawable.go));

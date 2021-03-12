@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -184,12 +185,22 @@ public class PutawayHeaderFragment extends Fragment implements View.OnClickListe
 
             }
             if (getArguments().getBoolean("IsFetchSuggestions")) {
+
+
                 try {
                     IsFetchSuggestions = getArguments().getBoolean("IsFetchSuggestions");
                     RegeneratePalletcode = getArguments().getString("RegeneratePalletcode");
                     if (IsFetchSuggestions) {
                         lblScanAllPallets.setText(RegeneratePalletcode);
-                        GetPutawaysuggesttions();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                GetPutawaysuggesttions();
+                            }
+                        }, 5000);
+
+
                     }
                 } catch (Exception ex) {
 

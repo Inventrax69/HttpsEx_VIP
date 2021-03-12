@@ -1312,6 +1312,7 @@ public class PutawayPalletTransfersFragment extends Fragment implements View.OnC
     }
 
 
+
     public void TransferPalletToLocation() {
         try {
 

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.R;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.OBDPickingDetailsFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayDetailsFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.util.FragmentUtils;
@@ -80,6 +81,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 				bundle.putString("warehouseId", str.split("[/]", 6)[5]);
 				bundle.putString("palletNumber", lblListHeader.getText().toString());
 
+//			m
 				PutawayDetailsFragment putawayDetailsFragment = new PutawayDetailsFragment();
 				putawayDetailsFragment.setArguments(bundle);
 				FragmentUtils.replaceFragmentWithBackStack(fragmentActivity, R.id.container_body, putawayDetailsFragment);

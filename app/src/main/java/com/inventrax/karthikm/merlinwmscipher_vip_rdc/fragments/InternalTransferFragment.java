@@ -409,12 +409,14 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                     } else {
                         if (etSku.getText().toString().isEmpty()) {
 //                            <mahe>
-//                            if (ScanValidator.isRSNScanned(scannedData)) {
-//                                scannedData = scannedData.split("[-]", 2)[0];
-//
-//                            }
+                            if (ScanValidator.isRSNScanned(scannedData)) {
+                                scannedData = scannedData.split("[-]", 2)[0];
+
+                            }
                             ValiDateMaterial(scannedData);
-                        } else {
+
+                        }
+                        else {
                             if (etLocationTo.getText().toString().isEmpty()) {
                                 ValidateLocation(scannedData);
                             }
@@ -721,6 +723,7 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
                                     ivScanSku.setImageResource(R.drawable.warning_img);
                                     common.showUserDefinedAlertType(errorMessages.EMC_0009, getActivity(), getContext(), "Warning");
                                 }
+
                             } else {
                                 common.showUserDefinedAlertType("Error while getting data", getActivity(), getContext(), "Error");
                             }
@@ -1745,16 +1748,21 @@ public class InternalTransferFragment extends Fragment implements View.OnClickLi
             inventoryDTO.setMaterialCode(Materialcode);
             inventoryDTO.setToLocationCode(etLocationTo.getText().toString());
             inventoryDTO.setQuantity(etQty.getText().toString());
-            if (storageloc.equalsIgnoreCase("SLOC")) {
+
+//            <mahe>
+            inventoryDTO.setSLOC("");
+
+//            mahe
+          /*  if (storageloc.equalsIgnoreCase("SLOC")) {
                 if (!isSKUScanned) {
-                    inventoryDTO.setSLOC("");
+
                 } else {
                     common.showUserDefinedAlertType(errorMessages.EMC_0052, getActivity(), getContext(), "Warning");
                     return;
                 }
             } else {
                 inventoryDTO.setSLOC(storageloc);
-            }
+            }*/
             inventoryDTO.setMRP(lblMRP.getText().toString());
             inventoryDTO.setTenantID(tenantId);
             inventoryDTO.setWarehouseId(whId);

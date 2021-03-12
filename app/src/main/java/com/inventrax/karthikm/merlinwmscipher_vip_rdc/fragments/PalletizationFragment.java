@@ -351,10 +351,11 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                     if (!etSku.getText().toString().isEmpty() || !etPalletFrom.getText().toString().isEmpty()) {
 
 
-                        if (!storageloc.isEmpty()) {
+                       // if (!storageloc.isEmpty()) {
                             if (!etQty.getText().toString().equals("0")) {
                                 if (!etQty.getText().toString().equals("")) {
                                     if (!etPalletTo.getText().toString().equals("")) {
+
                                         UpsertPalletBuilding();
                                     } else {
                                         common.showUserDefinedAlertType(errorMessages.EMC_087, getActivity(), getContext(), "Error");
@@ -366,9 +367,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                             } else {
                                 common.showUserDefinedAlertType(errorMessages.EMC_0068, getActivity(), getContext(), "Error");
                             }
-                        } else {
-                            common.showUserDefinedAlertType(errorMessages.EMC_0052, getActivity(), getContext(), "Error");
-                        }
+
                     } else {
                         common.showUserDefinedAlertType(errorMessages.EMC_0055, getActivity(), getContext(), "Error");
                     }
@@ -430,7 +429,8 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
     }
 
     //Assigning scanned value to the respective fields
-    public void ProcessScannedinfo(String scannedData) {
+    public void
+    ProcessScannedinfo(String scannedData) {
 
         if (((DrawerLayout) getActivity().findViewById(R.id.drawer_layout)).isDrawerOpen(GravityCompat.START)) {
             return;
@@ -449,10 +449,11 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
 
                 if (!isLocationScaned) {
                     ValidateLocation(scannedData);
-                } else {
-                    if (!isPalletScaned) {
+                }
+                   /* if (!isPalletScaned) {
                         ValidatePallet(scannedData);
-                    } else {
+                    }*/
+                    else {
                         if (etPalletTo.getText().toString().isEmpty()) {
                             ValidatePallet(scannedData);
                         } else {
@@ -463,7 +464,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                 ValiDateMaterial(scannedData);
 
                             }
-                        }
+
                     }
                        /*else {
                         if (etLocationTo.getText().toString().isEmpty()) {
@@ -735,7 +736,8 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                     /*    if (scannedData.split("[|]").length != 5) {*/
 
                                     Materialcode = scanDTO1.getSkuCode();
-                                    GetActivestockStorageLocations();
+//                                    GetActivestockStorageLocations();
+                                    GetAvailbleQtyList();
                                     lblBatchNo.setText(scanDTO1.getBatch());
                                     lblserialNo.setText(scanDTO1.getSerialNumber());
                                     lblMfgDate.setText(scanDTO1.getMfgDate());
@@ -1371,6 +1373,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
             inventoryDTO.setAccountId(accountId);
             inventoryDTO.setMaterialCode(Materialcode);
 
+
             message.setEntityObject(inventoryDTO);
             Call<String> call = null;
             ApiInterface apiService = RetrofitBuilderHttpsEx.getInstance(getActivity()).create(ApiInterface.class);
@@ -1496,11 +1499,12 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
             inventoryDTO.setUserId(Userid);
             inventoryDTO.setAccountId(accountId);
             inventoryDTO.setMaterialCode(Materialcode);
-            if (storageloc.equalsIgnoreCase("SLOC")) {
-                inventoryDTO.setSLOC("");
-            } else {
-                inventoryDTO.setSLOC(storageloc);
-            }
+            inventoryDTO.setSLOC("");
+//            if (storageloc.equalsIgnoreCase("SLOC")) {
+//
+//            } else {
+//                inventoryDTO.setSLOC(storageloc);
+//            }
             inventoryDTO.setLocationCode(etLocationFrom.getText().toString());
             inventoryDTO.setContainerCode(etPalletFrom.getText().toString());
             inventoryDTO.setMfgDate(lblMfgDate.getText().toString());
@@ -1799,7 +1803,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
 //           inventoryDTO.setProjectNo(lblProjectRefNo.getText().toString());
             inventoryDTO.setUserId(Userid);
             inventoryDTO.setAccountID(accountId);
-            inventoryDTO.setContainerCode(etPalletFrom.getText().toString());
+            inventoryDTO.setContainerCode("");
             inventoryDTO.setToContainerCode(etPalletTo.getText().toString());
             inventoryDTO.setMaterialCode(Materialcode);
             inventoryDTO.setToLocationCode(etLocationTo.getText().toString());
@@ -1868,7 +1872,7 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                     _lResult = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
 
                                     InventoryDTO dto = null;
-                                    ProgressDialogUtils.closeProgressDialog();
+                                     ProgressDialogUtils.closeProgressDialog();
 
                                     for (int i = 0; i < _lResult.size(); i++) {
 
@@ -2453,10 +2457,10 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                         if (!isPalletScaned) {
 
                                             if (!isSKUScanned) {
-                                                isPalletScaned = true;
-                                                etPalletFrom.setText(scannedData);
-                                                ValidatePalletCode(etPalletFrom.getText().toString(), "from");
-                                                return;
+//                                                isPalletScaned = true;
+////                                                etPalletFrom.setText(scannedData);
+//                                                ValidatePalletCode(etPalletFrom.getText().toString(), "from");
+//                                                return;
                                             }
 
                                         }
