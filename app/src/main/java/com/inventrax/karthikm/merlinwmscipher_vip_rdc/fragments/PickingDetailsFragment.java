@@ -43,6 +43,7 @@ import com.honeywell.aidc.UnsupportedPropertyException;
 
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.R;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.activities.MainActivity;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.adapters.PickingAdapter;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.common.Common;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.common.constants.EndpointConstants;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.common.constants.ErrorMessages;
@@ -117,7 +118,9 @@ public class PickingDetailsFragment extends Fragment implements View.OnClickList
     List<String> deviceIPList;
     SearchableSpinner spinnerSelectReason;
     SoundUtils soundUtils;
-    OutbountDTO outbountDTO;
+    OutbountDTO oOutboundDTO;
+    int pickedqty;
+    int assignedqty;
 
    // List<OutbountDTO> = listbundle.getParcelableArrayList("list");
 
@@ -236,6 +239,11 @@ public class PickingDetailsFragment extends Fragment implements View.OnClickList
         ProgressDialogUtils.closeProgressDialog();
         common.setIsPopupActive(false);
 
+
+
+//        GetPickItem(0);
+
+
 if (getArguments()!=null) {
     pickOBDno = getArguments().getString("ObdNum");
     sku =getArguments().getString("Sku");
@@ -243,8 +251,8 @@ if (getArguments()!=null) {
     sugLoc =getArguments().getString("SugLoc");
     skuDes =getArguments().getString("SkuDes");
     dock =getArguments().getString("Dock");
-    pickqty=getArguments().getString("pickedQty");
-    requiredqty=getArguments().getString("AssignedQuantity");
+    pickedqty= Integer.parseInt(getArguments().getString("pickedQty").split("[.]")[0]);
+    assignedqty= Integer.parseInt(getArguments().getString("AssignedQuantity").split("[.]")[0]);
     mrp=getArguments().getString("Mrp");
      pendingqty=getArguments().getString("pendingqty");
 
@@ -265,7 +273,7 @@ if (getArguments()!=null) {
 //    Pallet=getArguments().getString("PalletNo");
 //
 
-    lblSKuNo.setText(sku+"/"+mrp);
+    lblSKuNo.setText(sku +"/"+mrp);
 //    .split("[-]", 6)[3]+mrp
     lblPickListNo.setText(pickOBDno);
     lblCustomerName.setText(customerName);
@@ -273,33 +281,51 @@ if (getArguments()!=null) {
     lblLocationNo.setText(sugLoc);
     lblMaterialDescription.setText(skuDes);
     lblMaterialDescription.setText(skuDes);
-    lblRequiredQty.setText( pickqty + "/" + requiredqty);
+    lblRequiredQty.setText( pickedqty + "/" + assignedqty);
 
 
 
+    if ( pendingqty.equals("0.00")) {
+//        common.showUserDefinedAlertType("Qty. is already picked", getActivity(), getContext(), "Error");
+        common.showUserDefinedAlertType(errorMessages.EMC_090, getActivity(), getContext(), "Success");
+        btnPick.setVisibility(View.GONE);
+        Bundle bundle = new Bundle();
+        bundle.putString("ObdNum", pickOBDno);
+        bundle.putString("pickobdId", pickobdId);
 
+        PickingHeaderFragment pickingHeaderFragment = new PickingHeaderFragment();
+        pickingHeaderFragment.setArguments(bundle);
+        FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, pickingHeaderFragment);
+
+
+//
+   }
+//
+
+//    UpsertPickItem();
+
+  if(isPSN.equalsIgnoreCase("1")) {
+//        oOutboundDTO.setPickedQty("1");
+//                isPSN = oOutboundDTO.getIsPSN();
+        tvScanRSN.setText("Scan PSN");
+        lblReceivedQty.setEnabled(false);
+        lblReceivedQty.setText("1");
+
+    }
 
 }
- if ( pendingqty.equals("0.00")){
 
-     final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+  /*   final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
      builder.setTitle("Quantity is already picked");
-//     builder.setMessage(R.string.dialog_message);
+     builder.setMessage(R.string.dialog_message);
      builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
          @Override
          public void onClick(DialogInterface dialog, int which) {
 
-//           common.showUserDefinedAlertType("Qty. is already picked” ", getActivity(), getContext(), "Error");
-//           btnPick.setVisibility(View.GONE);
-             Bundle bundle = new Bundle();
-             bundle.putString("ObdNum", pickOBDno);
-             bundle.putString("pickobdId", pickobdId);
 
-             PickingHeaderFragment pickingHeaderFragment=new PickingHeaderFragment();
-             pickingHeaderFragment.setArguments(bundle);
-             FragmentUtils.replaceFragmentWithBackStack(getActivity(),R.id.container_body,pickingHeaderFragment);
+
          }
-     });
+     });*/
      /*builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
          @Override public void onClick(DialogInterface dialog, int which) {
 
@@ -307,9 +333,9 @@ if (getArguments()!=null) {
              FragmentUtils.replaceFragmentWithBackStack(getActivity(),R.id.container_body,pickingHeaderFragment);
          }
      });*/
-     builder.create().show(); // Create the Dialog and display it to the user
+//     builder.create().show(); // Create the Dialog and display it to the user
 
-        }
+
 
         if (scanType.equals("Auto")) {
             btnPick.setEnabled(false);
@@ -337,7 +363,7 @@ if (getArguments()!=null) {
         });
 
 
-//        GetPickItem(0);
+//
 
 
     }
@@ -347,19 +373,21 @@ if (getArguments()!=null) {
         switch (v.getId()) {
 
 
+
             case R.id.btnPick:
                 if (!lblLocationNo.getText().toString().isEmpty()) {
 
                     if (!lblReceivedQty.getText().toString().isEmpty() && !lblReceivedQty.getText().toString().equals("0")) {
 
-                        int asnqty = totalQty - recQty;
+
+                        int asnqty = assignedqty - pickedqty;
                         int qty = Integer.parseInt(lblReceivedQty.getText().toString().split("[.]")[0]);
-                        if (  asnqty > qty ) {
+                        if (  asnqty < qty ) {
 
-                            common.showUserDefinedAlertType("Qty. Should not be more than Pick qty.” ", getActivity(), getContext(), "Error");
+                            common.showUserDefinedAlertType("Qty. Should not be more than Pick qty.", getActivity(), getContext(), "Error");
 
+//
                         }
-
                         else {
 
                             cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
@@ -380,7 +408,7 @@ if (getArguments()!=null) {
                 break;
             case R.id.btn_Next:
 
-                GetPickItem(1);
+//                GetPickItem(1);
 
 
                 break;
@@ -415,9 +443,19 @@ if (getArguments()!=null) {
 
                 break;
             case R.id.btnCloseSkip:
-                rlPickList.setVisibility(View.VISIBLE);
+//                rlPickList.setVisibility(View.VISIBLE);
                 rlSkip.setVisibility(View.GONE);
+                Bundle bundle = new Bundle();
+                bundle.putString("ObdNum", pickOBDno);
+                bundle.putString("pickobdId", pickobdId);
+                PickingHeaderFragment pickingHeaderFragment = new PickingHeaderFragment();
+                pickingHeaderFragment.setArguments(bundle);
+                btnOk.setVisibility(View.GONE);
+
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, pickingHeaderFragment);
+                ProgressDialogUtils.showProgressDialog("Please Wait");
                 break;
+
             case R.id.cvScanPallet:
                 isPalletScanned = true;
                 cvScanPallet.setCardBackgroundColor(getResources().getColor(R.color.white));
@@ -589,9 +627,12 @@ if (getArguments()!=null) {
                         }
                     } else {
 
+
                         if(isPSN.equalsIgnoreCase("1")) {
+
                             if (ScanValidator.isRSNScanned(scannedData)) {
                                 String isCSNAtCharSeven = String.valueOf(scannedData.split("[-]", 2)[1].charAt(7));
+
                                 if(isCSNAtCharSeven.equalsIgnoreCase("C")){
                                     common.showUserDefinedAlertType("CSN scan is not allowed", getActivity(), getContext(), "Warning");
                                     return;
@@ -618,10 +659,10 @@ if (getArguments()!=null) {
                        /*if(scannedData.split("[-]").length != 2){
                             common.showUserDefinedAlertType("Please scan USN only", getActivity(), getContext(), "Warning");
                         }else {*/
-                        scannedData = scannedData.split("[-]", 2)[0];
-                        ValiDateMaterial(scannedData);
 
                         /* }*/
+                        scannedData = scannedData.split("[-]", 2)[0];
+                        ValiDateMaterial(scannedData);
 
                     }
 
@@ -748,7 +789,13 @@ if (getArguments()!=null) {
                                                 UpsertPickItem();
                                             } else {
                                                 if(isPSN.equalsIgnoreCase("1")){
-                                                    UpsertPickItem();
+                                                    //oOutboundDTO.setPickedQty("1");
+//                                                    isPSNoOutboundDTO = oOutboundDTO.getIsPSN();
+//                                                    tvScanRSN.setText("Scan PSN");
+//                                                    lblReceivedQty.setEnabled(false);
+//                                                    lblReceivedQty.setText("1");
+
+                                                     UpsertPickItem();
                                                 }else {
                                                     lblReceivedQty.setEnabled(true);
                                                     btnPick.setEnabled(true);
@@ -1063,6 +1110,7 @@ if (getArguments()!=null) {
             outbountDTO.setAccountID(accountId);
             outbountDTO.setOutboundID(pickobdId);
             outbountDTO.setRID(rid);
+
             outbountDTO.setFetchNextItem(fetchNextItem);
             message.setEntityObject(outbountDTO);
             Call<String> call = null;
@@ -1158,7 +1206,21 @@ if (getArguments()!=null) {
                                         lblReceivedQty.setEnabled(false);
                                         lblReceivedQty.setText("1");
 
-                                    }else {
+
+
+                                    }
+                                  /*  if ( pendingqty.equals("0.00")) {
+                                        common.showUserDefinedAlertType("Qty. is already picked", getActivity(), getContext(), "Error");
+                                        btnPick.setVisibility(View.GONE);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("ObdNum", pickOBDno);
+                                        bundle.putString("pickobdId", pickobdId);
+
+                                        PickingHeaderFragment pickingHeaderFragment = new PickingHeaderFragment();
+                                        pickingHeaderFragment.setArguments(bundle);
+                                        FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, pickingHeaderFragment);
+                                    }*/
+                                    else {
                                         isPSN="";
                                         tvScanRSN.setText(getString(R.string.sku));
                                         lblReceivedQty.setEnabled(false);
@@ -1549,8 +1611,13 @@ if (getArguments()!=null) {
             oOutboundDTO.setLocation(lblLocationNo.getText().toString());
             oOutboundDTO.setPalletNo(etPallet.getText().toString());
 
-            if(isPSN.equalsIgnoreCase("1"))
+            if(isPSN.equalsIgnoreCase("1")) {
                 oOutboundDTO.setPickedQty("1");
+//                isPSN = oOutboundDTO.getIsPSN();
+//                tvScanRSN.setText("Scan PSN");
+//                lblReceivedQty.setEnabled(false);
+//                lblReceivedQty.setText("1");
+            }
             else
                 oOutboundDTO.setPickedQty(lblReceivedQty.getText().toString());
             oOutboundDTO.setAssignedID(assignedId);
@@ -1604,9 +1671,9 @@ if (getArguments()!=null) {
                                     ProgressDialogUtils.closeProgressDialog();
                                 }
 
-                                cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                ivScanRSN.setImageResource(R.drawable.warning_img);
-
+//                                cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                ivScanRSN.setImageResource(R.drawable.warning_img);
+//                                tvScanRSN.setText("Scan PSN");
                                 lblReceivedQty.setText("");
                                 lblReceivedQty.setEnabled(false);
                                 btnPick.setEnabled(false);
@@ -1636,9 +1703,17 @@ if (getArguments()!=null) {
                                 _lstPickitem = (List<LinkedTreeMap<?, ?>>) core.getEntityObject();
 
                                 OutbountDTO oOutboundDTO = null;
+
                                 for (int i = 0; i < _lstPickitem.size(); i++) {
                                     oOutboundDTO = new OutbountDTO(_lstPickitem.get(i).entrySet());
+
                                 }
+
+
+
+
+                                pickedqty = Integer.parseInt(oOutboundDTO.getPickedQty().split("[.]")[0]);
+                                assignedqty = Integer.parseInt(oOutboundDTO.getAssignedQuantity().split("[.]")[0]);
 
                                 ProgressDialogUtils.closeProgressDialog();
 
@@ -1650,6 +1725,7 @@ if (getArguments()!=null) {
                                     lblReceivedQty.setText("");
                                     lblSKuNo.setText("");
 
+
                                     // Added to clear data after completion of the outbound
                                     ClearFields();
                                     clearData();
@@ -1657,21 +1733,43 @@ if (getArguments()!=null) {
                                     common.showUserDefinedAlertType(errorMessages.EMC_0071, getActivity(), getContext(), "Success");
 
 
-                                } else {
+                                }
+//                                if(oOutboundDTO.getIsPSN().equalsIgnoreCase("1")) {
+//                                    isPSN = oOutboundDTO.getIsPSN();
+//                                    tvScanRSN.setText("Scan PSN");
+//                                    lblReceivedQty.setEnabled(false);
+//                                    lblReceivedQty.setText("1");
+//                                }
+                                else {
 
                                     lblReceivedQty.setText("");
                                     lblReceivedQty.setEnabled(false);
                                     lblReceivedQty.clearFocus();
 
-                                    cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                    ivScanRSN.setImageResource(R.drawable.check);
+//                                    cvScanRSN.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                                    ivScanRSN.setImageResource(R.drawable.check);
 
                                     lblRequiredQty.setText(oOutboundDTO.getPickedQty().split("[.]")[0] + "/" + oOutboundDTO.getAssignedQuantity().split("[.]")[0]);
 
 
                                     soundUtils.alertSuccess(getActivity(), getContext());
 
-                                    GetPickItem(0);
+
+                                    if (oOutboundDTO.getPendingQty().equals("0.00")) {
+//                                        common.showUserDefinedAlertType("Qty. is already picked", getActivity(), getContext(), "Error");
+                                        common.showUserDefinedAlertType(errorMessages.EMC_090, getActivity(), getContext(), "Success");
+                                        btnPick.setVisibility(View.GONE);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("ObdNum", pickOBDno);
+                                        bundle.putString("pickobdId", pickobdId);
+
+                                        PickingHeaderFragment pickingHeaderFragment = new PickingHeaderFragment();
+                                        pickingHeaderFragment.setArguments(bundle);
+                                        FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, pickingHeaderFragment);
+
+
+                                    }
+//                                    GetPickItem(0);
                                 }
 
 
@@ -2094,5 +2192,11 @@ if (getArguments()!=null) {
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(int pos);
     }
 }

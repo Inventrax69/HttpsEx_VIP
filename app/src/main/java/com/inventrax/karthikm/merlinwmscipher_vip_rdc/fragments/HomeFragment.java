@@ -108,9 +108,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, putAwayFragment);
 //                break;
 
-            case R.id.ll_picking:
+          /*  case R.id.ll_picking:
                 OBDPickingHeaderFragment obdPickingHeaderFragment = new OBDPickingHeaderFragment();
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, obdPickingHeaderFragment);
+                break;*/
+
+            case R.id.ll_picking:
+                PickingHeaderFragment pickingHeaderFragment = new PickingHeaderFragment();
+                FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, pickingHeaderFragment);
                 break;
 
             case R.id.ll_VLPDPicking:
@@ -152,7 +157,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 PutawayHeaderFragment putawayHeaderFragment = new PutawayHeaderFragment();
                 FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, putawayHeaderFragment);
                 break;
-
 
         }
 

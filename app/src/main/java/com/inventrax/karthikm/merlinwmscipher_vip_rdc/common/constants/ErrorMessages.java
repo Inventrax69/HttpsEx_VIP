@@ -156,4 +156,6 @@ public class ErrorMessages {
     public String EMC_088 = "Please scan pallet.";
 
     public String EMC_089 = "From & To Pallets cannot be same";
+
+    public String EMC_090 = "Sku successfully picked";
 }

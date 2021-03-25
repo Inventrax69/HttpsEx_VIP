@@ -45,6 +45,8 @@ import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PackingFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PackingInfoFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PalletTransfersFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PalletizationFragment;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PickingDetailsFragment;
+import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PickingHeaderFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayDetailsFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayFragment;
 import com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments.PutawayHeaderFragment;
@@ -245,6 +247,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
                 if (fragment != null && fragment.isVisible() && fragment instanceof PutawayDetailsFragment) {
                     ((PutawayDetailsFragment) fragment).myScannedData(MainActivity.this, ScannedData);
                 }
+                if (fragment != null && fragment.isVisible() && fragment instanceof PickingDetailsFragment) {
+                    ((PickingDetailsFragment) fragment).myScannedData(MainActivity.this, ScannedData);
+                }
+                if (fragment != null && fragment.isVisible() && fragment instanceof PickingHeaderFragment) {
+                    ((PickingHeaderFragment) fragment).myScannedData(MainActivity.this, ScannedData);
+                }
             }
         }
 
@@ -415,9 +423,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Fr
             }
             break;
 
-            case "OBD Picking": {
+         /*   case "OBD Picking": {
                 fragment = new OBDPickingHeaderFragment();
                 title = "OBD Picking";
+            }
+            break;
+*/
+            case "Picking": {
+                fragment = new PickingHeaderFragment();
+                title = "Picking";
             }
             break;
 

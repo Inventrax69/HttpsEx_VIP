@@ -398,13 +398,13 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
         cvScanFromLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
         ivScanFromLoc.setImageResource(R.drawable.fullscreen_img);
 
-        cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
-        ivScanToLoc.setImageResource(R.drawable.fullscreen_img);
+//        cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
+//        ivScanToLoc.setImageResource(R.drawable.fullscreen_img);
 
         cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
         ivScanSku.setImageResource(R.drawable.fullscreen_img);
 
-        etLocationTo.setText("");
+//        etLocationTo.setText("");
         etLocationFrom.setText("");
         etPalletFrom.setText("");
         etPalletTo.setText("");
@@ -1809,6 +1809,12 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
             inventoryDTO.setToLocationCode(etLocationTo.getText().toString());
             inventoryDTO.setQuantity(etQty.getText().toString());
 
+            etLocationTo.setText("");
+            etPalletTo.setText("");
+            etSku.setText("");
+            etQty.setText("");
+
+
             if (storageloc.equalsIgnoreCase("SLOC")) {
                 if (!isSKUScanned) {
                     inventoryDTO.setSLOC("");
@@ -1883,6 +1889,10 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                             // Clearing data after completion of transfer
 
                                             // From location is not cleared here as per requirement
+                                            etLocationTo.setText("");
+                                            etPalletTo.setText("");
+                                            etSku.setText("");
+                                            etQty.setText("");
 
                                             cvScanSku.setCardBackgroundColor(getResources().getColor(R.color.skuColor));
                                             ivScanSku.setImageResource(R.drawable.fullscreen_img);
@@ -1893,10 +1903,8 @@ public class PalletizationFragment extends Fragment implements View.OnClickListe
                                             cvScanToLoc.setCardBackgroundColor(getResources().getColor(R.color.locationColor));
                                             ivScanToLoc.setImageResource(R.drawable.fullscreen_img);
 
-                                            etLocationTo.setText("");
-                                            etPalletTo.setText("");
-                                            etSku.setText("");
-                                            etQty.setText("");
+
+
 
                                             lblBatchNo.setText("");
                                             lblserialNo.setText("");

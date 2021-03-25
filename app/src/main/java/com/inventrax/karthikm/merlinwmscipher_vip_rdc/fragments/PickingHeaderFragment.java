@@ -1,5 +1,6 @@
 package com.inventrax.karthikm.merlinwmscipher_vip_rdc.fragments;
 
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -151,6 +152,7 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
         pickingRecyclerview.setVisibility(View.GONE);
         ProgressDialogUtils.closeProgressDialog();
         common.setIsPopupActive(false);
+
         LoadPickRefnos();
 
         // For Cipher Barcode reader
@@ -180,13 +182,21 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
             }
         });
 
+
         if (getArguments()!=null) {
             pickRefNo = getArguments().getString("ObdNum");
             pickobdId = getArguments().getString("pickobdId");
 
             if(!pickRefNo.isEmpty()){
+
+                pickingRecyclerview.setVisibility(View.VISIBLE);
                 rlPickListOne.setVisibility(View.GONE);
+                pickingoOdNo.setVisibility(View.VISIBLE);
                 llPickingSugg.setVisibility(View.VISIBLE);
+                pickingoOdNo.setText(pickRefNo);
+                btnGo.setVisibility(View.GONE);
+                spinnerSelectPickList.setVisibility(View.GONE);
+                rlPickListOne.setVisibility(View.GONE);
                 GetOBDItemsForPicking();
             }else {
                 rlPickListOne.setVisibility(View.VISIBLE);
@@ -316,7 +326,7 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
 //                    GetPutawaysuggesttions();
                     pickingRecyclerview.setVisibility(View.VISIBLE);
                     rlPickListOne.setVisibility(View.GONE);
-                    pickingoOdNo.setVisibility(View.VISIBLE);
+                   pickingoOdNo.setVisibility(View.VISIBLE);
                     pickingoOdNo.setText(pickRefNo);
                     GetOBDItemsForPicking();
                 }
@@ -487,6 +497,12 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
                                 pickingAdapter=new PickingAdapter(getActivity(),getContext(),lstOutbound, new OnListFragmentInteractionListener() {
                                     @Override
                                     public void onListFragmentInteraction(int pos) {
+
+
+//                                        ArrayList<String> arraylist = new ArrayList<String>();
+//                                        Bundle bundle = new Bundle();
+//                                        bundle.putSerializable("mylist", arraylist);
+
 
                                       String customerName = lstOutbound.get(pos).getCustomerName();
                                         String sku = lstOutbound.get(pos).getSKU();
@@ -818,12 +834,17 @@ public class PickingHeaderFragment extends Fragment implements View.OnClickListe
                                     if(lstPickRefNo.size()==1){
                                         pickRefNo=lstPickRefNo.get(0).toString().split("[-]", 2)[0];
                                         pickobdId = lstObdIds.get(0).toString();
-                                        Bundle bundle = new Bundle();
+                                        pickingRecyclerview.setVisibility(View.VISIBLE);
+                                        rlPickListOne.setVisibility(View.GONE);
+                                        pickingoOdNo.setVisibility(View.VISIBLE);
+                                        pickingoOdNo.setText(pickRefNo);
+                                        GetOBDItemsForPicking();
+                                       /* Bundle bundle = new Bundle();
                                         bundle.putString("pickOBDno", pickRefNo);
                                         bundle.putString("pickobdId", pickobdId);
                                         OBDPickingDetailsFragment OBDPickingDetailsFragment = new OBDPickingDetailsFragment();
                                         OBDPickingDetailsFragment.setArguments(bundle);
-                                        FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, OBDPickingDetailsFragment);
+                                        FragmentUtils.replaceFragmentWithBackStack(getActivity(), R.id.container_body, OBDPickingDetailsFragment);*/
                                     }else{
                                         arrayAdapterPickList = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, lstPickRefNo);
                                         spinnerSelectPickList.setAdapter(arrayAdapterPickList);

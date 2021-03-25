@@ -354,7 +354,7 @@
                 <LinearLayout
 
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1.0"
                     android:layout_marginTop="10dp"
                     android:weightSum="4">
@@ -388,7 +388,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1.5"
                 android:gravity="center"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -631,7 +631,7 @@
                 android:layout_height="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -989,8 +989,9 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+
                 android:layout_weight="1.2"
                 android:orientation="vertical"
                 android:weightSum="2.0">
@@ -1035,7 +1036,7 @@
                     <Button
                         android:id="@+id/btnPick"
                         android:layout_width="70dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:layout_marginLeft="15dp"
                         android:layout_weight="0.5"
                         android:background="@drawable/button_shape"
@@ -1072,7 +1073,19 @@
 
 
         </LinearLayout>
-
+        <Button
+            android:id="@+id/btnCloseSkip"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/button_close_shape"
+            android:elevation="30dp"
+            android:foreground="@drawable/button_cross_close"
+            android:foregroundGravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -1118,22 +1131,8 @@
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
-        <Button
-            android:id="@+id/btnCloseSkip"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="0dp"
-            android:background="@drawable/button_close_shape"
-            android:elevation="30dp"
-            android:foreground="@drawable/button_cross_close"
-            android:foregroundGravity="center"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
 
 
     </RelativeLayout>
-
 
 </RelativeLayout>
