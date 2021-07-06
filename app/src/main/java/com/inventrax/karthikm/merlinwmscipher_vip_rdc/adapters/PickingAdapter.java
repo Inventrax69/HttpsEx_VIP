@@ -20,22 +20,23 @@ import java.util.List;
 public class PickingAdapter extends RecyclerView.Adapter<PickingAdapter.Recycle> {
     Context context;
     FragmentActivity activity;
-    List<OutbountDTO>lstOutbound;
+    List<OutbountDTO> lstOutbound;
     private String pickRefNo = "", pickobdId;
     public final PickingHeaderFragment.OnListFragmentInteractionListener mListener;
+    Button btnPicking;
 
 
     public PickingAdapter(FragmentActivity activity, Context context, List<OutbountDTO> lstOutbound, PickingHeaderFragment.OnListFragmentInteractionListener listener
     ) {
-        this.context=context;
-        this.activity=activity;
-        this.lstOutbound=lstOutbound;
-        this.mListener=listener;
+        this.context = context;
+        this.activity = activity;
+        this.lstOutbound = lstOutbound;
+        this.mListener = listener;
     }
 
     @Override
     public Recycle onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(context).inflate(R.layout.pickinglayout,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.pickinglayout, parent, false);
         return new Recycle(v);
     }
 
@@ -43,7 +44,20 @@ public class PickingAdapter extends RecyclerView.Adapter<PickingAdapter.Recycle>
     public void onBindViewHolder(Recycle holder, @SuppressLint("RecyclerView") final int position) {
         holder.pickLocation.setText(lstOutbound.get(position).getLocation());
         holder.pickSku.setText(lstOutbound.get(position).getSKU());
-        holder.pickQuantity.setText(lstOutbound.get(position).getPickedQty() + "/" + lstOutbound.get(position).getAssignedQuantity());
+        holder.pickSkuDescription.setText(lstOutbound.get(position).getMaterialDescription());
+        String pickedQty = lstOutbound.get(position).getPickedQty();
+        String assignedQty = lstOutbound.get(position).getAssignedQuantity();
+        holder.pickQuantity.setText(pickedQty + "/" + assignedQty);
+
+/*        if(!pickedQty.equalsIgnoreCase(assignedQty)){
+            btnPicking.setVisibility(View.VISIBLE);
+        }*/
+
+        if (lstOutbound.get(position).getPendingQty().equalsIgnoreCase("0.00"))
+            btnPicking.setVisibility(View.GONE);
+        else
+            btnPicking.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -53,15 +67,16 @@ public class PickingAdapter extends RecyclerView.Adapter<PickingAdapter.Recycle>
     }
 
     public class Recycle extends RecyclerView.ViewHolder {
-        TextView pickLocation,pickSku,pickQuantity;
+        TextView pickLocation, pickSku, pickSkuDescription, pickQuantity;
         View mView;
-        Button btnPicking;
+
         public Recycle(View itemView) {
             super(itemView);
-            pickLocation= (TextView) itemView.findViewById(R.id.pickLocation);
-            pickSku= (TextView) itemView.findViewById(R.id.pickSku);
-            pickQuantity= (TextView) itemView.findViewById(R.id.pickQuantity);
-            btnPicking= (Button) itemView.findViewById(R.id.btnPicking);
+            pickLocation = (TextView) itemView.findViewById(R.id.pickLocation);
+            pickSku = (TextView) itemView.findViewById(R.id.pickSku);
+            pickSkuDescription = (TextView) itemView.findViewById(R.id.pickSkuDescription);
+            pickQuantity = (TextView) itemView.findViewById(R.id.pickQuantity);
+            btnPicking = (Button) itemView.findViewById(R.id.btnPicking);
 
 
             btnPicking.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +84,7 @@ public class PickingAdapter extends RecyclerView.Adapter<PickingAdapter.Recycle>
                 public void onClick(View v) {
                     if (null != mListener) {
                         // returns selected position to the fragment
-                        int position=getAdapterPosition();
+                        int position = getAdapterPosition();
                         mListener.onListFragmentInteraction(position);
 
 

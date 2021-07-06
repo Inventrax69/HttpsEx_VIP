@@ -19,19 +19,30 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="14dp"
-
         android:text="dcff"
         android:layout_below="@+id/pickLocation"
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+
+    <TextView
+        android:id="@+id/pickSkuDescription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="dcff"
+        android:layout_below="@+id/pickSku"
+        android:paddingBottom="5dp"
+        android:textColor="@color/black"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+
     <TextView
         android:id="@+id/pickQuantity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="14dp"
         android:text="dcff"
-        android:layout_below="@+id/pickSku"
+        android:layout_below="@+id/pickSkuDescription"
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
@@ -43,7 +54,8 @@
         android:background="@drawable/button_shape"
         android:layout_alignParentRight="true"
         android:layout_gravity="fill_vertical"
-        android:text="@string/picking"
+        android:text="@string/pick"
+        android:visibility="gone"
         android:layout_marginTop="20dp"
         android:textAllCaps="false"
         android:textColor="@color/white" />
